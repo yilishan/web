@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
+import {
+	Button,
+	Tree,
+} from 'antd';
+
+const { TreeNode } = Tree;
 
 class App extends Component {
 	constructor(){
@@ -42,7 +49,27 @@ class App extends Component {
 					>
 						Learn React now123
 					</a> */}
-					<button onClick={() => output(this.state.data)}>show</button>
+					<Button type="primary" onClick = {() => output(this.state.data)}> show </Button>
+					<Tree 
+						showLine
+						defaultExpandedKeys = {['0-0-0']}
+						onSelect = {this.onSelect}
+					>
+						<TreeNode title="parent 1" key="0-0">
+						<TreeNode title="parent 1-0" key="0-0-0">
+							<TreeNode title="leaf" key="0-0-0-0" />
+							<TreeNode title="leaf" key="0-0-0-1" />
+							<TreeNode title="leaf" key="0-0-0-2" />
+						</TreeNode>
+						<TreeNode title="parent 1-1" key="0-0-1">
+							<TreeNode title="leaf" key="0-0-1-0" />
+						</TreeNode>
+						<TreeNode title="parent 1-2" key="0-0-2">
+							<TreeNode title="leaf" key="0-0-2-0" />
+							<TreeNode title="leaf" key="0-0-2-1" />
+						</TreeNode>
+						</TreeNode>
+					</Tree>
 				</header>
 			</div>
 		);
