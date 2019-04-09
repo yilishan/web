@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import {
 	Button,
 } from 'antd';
+import { func } from 'prop-types';
 
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
@@ -13,7 +14,12 @@ class AppTree extends React.Component {
 		if (item && Array.isArray(item)) {
 			return item.map((ele) => {
 				return (
-					<div className='App-tree-node' onClick={(e) => this.props.onClick(ele,e)} key={ele.id}>
+					<div
+						className='App-tree-node'
+						onClick={(e) => this.props.onClick(ele, e)}
+						onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
+						key={ele.id}
+					>
 						{ele.title}
 						{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
 					</div>
@@ -34,6 +40,9 @@ class AppTree extends React.Component {
 	};
 }
 
+let timer = 0;
+let delay = 200;
+let prevent = false;
 class App extends Component {
 	constructor() {
 		super();
@@ -107,11 +116,34 @@ class App extends Component {
 	}
 
 	// onclick
-	handleClick(element,e) {
+	handleClick(element, e) {
 		e.preventDefault();
 		e.stopPropagation();
-		console.log(element.title + '被点击了', element.id);
+		let me = this;
+		timer = setTimeout(function () {
+			if (!prevent) {
+				me.doClick(element);
+			}
+			prevent = false;
+		}, delay);
+	}
+
+	// onDoubleClick
+	handleDoubleClick(element, e) {
+		e.preventDefault();
+		e.stopPropagation();
+		clearTimeout(timer);
+		prevent = true;
+		this.doDoubleClick(element);
+	}
+
+	doClick(element){
+		console.log('单击:' + element.title , element.id);
 		this.dataModify(element.id, element.title + '123');
+	}
+
+	doDoubleClick(element){
+		console.log('双击:' + element.title);
 	}
 
 	//  input id & , then can do select/add/delete/modify/find
@@ -147,7 +179,8 @@ class App extends Component {
 					<Button type="primary" onClick={() => output(this.state.data)}> show </Button>
 					<AppTree
 						value={this.state.dataList}
-						onClick={(element,e) => this.handleClick(element,e)}
+						onClick={(element, e) => this.handleClick(element, e)}
+						onDoubleClick={(element, e) => this.handleDoubleClick(element, e)}
 					/>
 				</header>
 			</div>
