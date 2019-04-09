@@ -4,19 +4,19 @@
 
 ### |---knowledgeTree
 ### |---web
-###      |---myreactapp
-###              |---注： webpack+react创建项目
-###      |---tic-tac-toe
-###              |---注： react官网快速上手游戏
-###      |---simpleReact 
-###              |---注： 单页react项目
+###     |---myreactapp
+###         |---注： webpack+react创建项目
+###     |---tic-tac-toe
+###         |---注： react官网快速上手游戏
+###     |---simpleReact 
+###         |---注： 单页react项目
 
 -------------
 
 # plan
 ## *2019-04-08*
 ### 写一个tree控件
-- 最基本的功能：根据数据展示tree形目录
+[x] 最基本的功能：根据数据展示tree形目录
 - 展开收起功能
 - 编辑字段功能
 - 删除节点

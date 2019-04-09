@@ -8,8 +8,39 @@ import {
 } from 'antd';
 
 // input obj, return TreeNode of Tree
-function AppTree(props) {
+class AppTree extends React.Component {
+	mapData = (item) => {
+		if (item && Array.isArray(item)) {
+			return item.map((ele) => {
+				if (ele.children && Array.isArray(ele.children)) {
+					return (
+						<div className='App-tree-div' key={ele.title}>
+							{ele.title}
+							{this.mapData(ele.children)}
+						</div>
+					);
+				} else {
+					return (
+						<div className='App-tree-div' key={ele.title}>
+							{ele.title}
+						</div>
+					);
+				}
+			});
+		} else {
+			return [];
+		}
+	}
 
+	render() {
+		let content = this.mapData(this.props.value);
+
+		return (
+			<div>
+				{content}
+			</div>
+		);
+	};
 }
 
 const { TreeNode } = Tree;
@@ -67,7 +98,7 @@ class App extends Component {
 								{
 									title: '代数',
 									children: [
-
+										
 									]
 								},
 							]
