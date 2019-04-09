@@ -32,6 +32,6 @@
 # problem
 ## *2019-04-09*
 ### onClick 与 onDoubleClick冲突的问题
-[参考stackoverflow](https://stackoverflow.com/questions/25777826/onclick-works-but-ondoubleclick-is-ignored-on-react-component)
-[参考W3C规范](https://www.w3.org/TR/DOM-Level-3-Events/#event-type-dblclick)
-解决方法：不要同时使用单击和双击事件，这种应用场景，应该由用户进行代理调度
+[参考stackoverflow](https://stackoverflow.com/questions/25777826/onclick-works-but-ondoubleclick-is-ignored-on-react-component)  
+[参考W3C规范](https://www.w3.org/TR/DOM-Level-3-Events/#event-type-dblclick)  
+解决方法：不要同时使用单击和双击事件，这种应用场景，应该由用户进行代理调度  

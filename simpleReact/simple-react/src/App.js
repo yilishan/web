@@ -137,13 +137,13 @@ class App extends Component {
 		this.doDoubleClick(element);
 	}
 
-	doClick(element){
-		console.log('单击:' + element.title , element.id);
-		this.dataModify(element.id, element.title + '123');
+	doClick(element) {
+		console.log('单击:' + element.title, element.id);
 	}
 
-	doDoubleClick(element){
+	doDoubleClick(element) {
 		console.log('双击:' + element.title);
+		this.dataModify(element.id, element.title + '123');
 	}
 
 	//  input id & , then can do select/add/delete/modify/find
