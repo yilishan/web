@@ -4,28 +4,20 @@ import './App.css';
 import 'antd/dist/antd.css';
 import {
 	Button,
-	Tree,
 } from 'antd';
 
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
+	// show array data to tree Recursively 
 	mapData = (item) => {
 		if (item && Array.isArray(item)) {
 			return item.map((ele) => {
-				if (ele.children && Array.isArray(ele.children)) {
-					return (
-						<div className='App-tree-div' key={ele.title}>
-							{ele.title}
-							{this.mapData(ele.children)}
-						</div>
-					);
-				} else {
-					return (
-						<div className='App-tree-div' key={ele.title}>
-							{ele.title}
-						</div>
-					);
-				}
+				return (
+					<div className='App-tree-node' onClick={(e) => this.props.onClick(ele,e)} key={ele.id}>
+						{ele.title}
+						{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
+					</div>
+				);
 			});
 		} else {
 			return [];
@@ -34,16 +26,14 @@ class AppTree extends React.Component {
 
 	render() {
 		let content = this.mapData(this.props.value);
-
 		return (
-			<div>
+			<div className='App-tree-root'>
 				{content}
 			</div>
 		);
 	};
 }
 
-const { TreeNode } = Tree;
 class App extends Component {
 	constructor() {
 		super();
@@ -68,18 +58,22 @@ class App extends Component {
 			dataList: [
 				{
 					title: '学科',
+					id: '0001',
 					children: [
 						{
 							title: '语文',
+							id: '0002',
 							children: [
 								{
 									title: '现代文',
+									id: '0003',
 									children: [
 
 									]
 								},
 								{
 									title: '文言文',
+									id: '0004',
 									children: [
 
 									]
@@ -88,17 +82,20 @@ class App extends Component {
 						},
 						{
 							title: '数学',
+							id: '0005',
 							children: [
 								{
 									title: '几何',
+									id: '0006',
 									children: [
 
 									]
 								},
 								{
 									title: '代数',
+									id: '0007',
 									children: [
-										
+
 									]
 								},
 							]
@@ -109,32 +106,49 @@ class App extends Component {
 		};
 	}
 
+	// onclick
+	handleClick(element,e) {
+		e.preventDefault();
+		e.stopPropagation();
+		console.log(element.title + '被点击了', element.id);
+		this.dataModify(element.id, element.title + '123');
+	}
+
+	//  input id & , then can do select/add/delete/modify/find
+	dataModify(id, value) {
+		let mylist = this.state.dataList;
+
+		function mapList(item) {
+			if (item && Array.isArray(item)) {
+				for (let i = 0, len = item.length; i < len; i++) {
+					if (item[i].id === id) {
+						console.log(item[i].title, value);
+						// handle here
+						item[i].title = value;
+						return item;
+					}
+					if (item[i].children && Array.isArray(item[i].children)) {
+						item[i].children = mapList(item[i].children);
+					}
+				}
+			}
+			return item;
+		}
+
+		this.setState({
+			dataList: mapList(mylist),
+		});
+	}
+
 	render() {
 		return (
 			<div className="App">
 				<header className="App-header">
 					<Button type="primary" onClick={() => output(this.state.data)}> show </Button>
-					{/* <Tree
-						showLine
-						defaultExpandedKeys={['0-0-0']}
-						onSelect={this.onSelect}
-					>
-						<TreeNode title='root' key="0-0">
-							<TreeNode title="parent 1-0" key="0-0-0">
-								<TreeNode title="leaf" key="0-0-0-0" />
-								<TreeNode title="leaf" key="0-0-0-1" />
-								<TreeNode title="leaf" key="0-0-0-2" />
-							</TreeNode>
-							<TreeNode title="parent 1-1" key="0-0-1">
-								<TreeNode title="leaf" key="0-0-1-0" />
-							</TreeNode>
-							<TreeNode title="parent 1-2" key="0-0-2">
-								<TreeNode title="leaf" key="0-0-2-0" />
-								<TreeNode title="leaf" key="0-0-2-1" />
-							</TreeNode>
-						</TreeNode>
-					</Tree> */}
-					<AppTree value={this.state.dataList} />
+					<AppTree
+						value={this.state.dataList}
+						onClick={(element,e) => this.handleClick(element,e)}
+					/>
 				</header>
 			</div>
 		);
