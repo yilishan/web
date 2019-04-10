@@ -54,3 +54,11 @@
     left: 30px;
     cursor: pointer;
 }
+
+.App-p {
+    color: #000000;
+}
+
+.App-btn {
+    margin-top: 15px;
+}

@@ -64,6 +64,7 @@ class App extends Component {
 					},
 				},
 			},
+			idList: ['0001', '0002', '0003', '0004', '0005', '0006', '0007', '0008', '0009',],
 			selectId: '',
 			dataList: [
 				{
@@ -118,9 +119,16 @@ class App extends Component {
 
 	// onKeyPress
 	handleKeyPress(e) {
-		console.log('按键：');
-		if (e.keyCode === 13) {
-			console.log('enter');
+		let me = this;
+		let selectId = me.state.selectId;
+		console.log(e.key);
+		switch (e.key) {
+			case 'Enter':
+				if (selectId && selectId !== '') {
+					me.addElement('物理', 'current');
+				}
+				break;
+			default:
 		}
 	}
 
@@ -156,18 +164,21 @@ class App extends Component {
 	doDoubleClick(element) {
 		console.log('双击:' + element.title);
 		// this.dataModify(element.id, element.title + '123', 'EDIT');
-		// this.deleteElement(element.id);
-		// this.addElement(element.id,'物理');
+		// this.deleteElement();
+		// this.addElement('物理');
 		this.editElement(element.id, '物理');
 	}
 
-	// add element after id,
+	// add element after id, type: current/children
 	// TODO: generate unique id
-	addElement(id, titleText) {
+	addElement(titleText, type) {
 		let mylist = this.state.dataList;
+		let id = this.state.selectId;
+
+		this.getId();
 		let newElement = {
 			title: titleText,
-			id: '0009',
+			id: this.getId(),
 			children: [
 
 			]
@@ -179,7 +190,12 @@ class App extends Component {
 					if (item[i].id === id) {
 						// handle here
 						console.log('添加：' + item[i].title);
-						item.splice(i + 1, 0, newElement);
+						if (type === 'current') {
+							item.splice(i + 1, 0, newElement);
+						} else if (type === 'children') {
+							console.log(item[i].children);
+							item[i].children.push(newElement);
+						}
 						return item;
 					}
 					if (item[i].children && Array.isArray(item[i].children)) {
@@ -196,8 +212,13 @@ class App extends Component {
 	}
 
 	// delete element with id
-	deleteElement(id) {
+	deleteElement() {
 		let mylist = this.state.dataList;
+		let id = this.state.selectId;
+
+		if (id === '') {
+			return;
+		}
 
 		function mapList(item) {
 			if (item && Array.isArray(item)) {
@@ -217,6 +238,7 @@ class App extends Component {
 		}
 
 		this.setState({
+			selectId: '',
 			dataList: mapList(mylist),
 		});
 	}
@@ -247,17 +269,44 @@ class App extends Component {
 		});
 	}
 
+	// getId, without repetition, use timestamp right now
+	getId() {
+		let id = Date.now().toString();
+		let idList = this.state.idList;
+		// delete repetition
+		if (idList.indexOf(id) !== -1) {
+			id = this.getId();
+		} else {
+			this.setState({
+				idList: idList.concat(id),
+			});
+		}
+		return id;
+	}
+
 	render() {
 		return (
 			<div className="App"
-				onKeyPress={this.handleKeyPress}
+				onKeyPress={this.handleKeyPress.bind(this)}
 				tabIndex="0"
 			>
 				<header className="App-header">
 					<Button
+						className='App-btn'
+						type="danger"
+						onClick={this.deleteElement.bind(this)}
+					> 删除 </Button>
+					<Button
+						className='App-btn'
 						type="primary"
-						onClick={() => output(this.state.data)}
-					> show </Button>
+						onClick={this.addElement.bind(this, '化学', 'current')}
+					> 插入节点(Enter) </Button>
+					<Button
+						className='App-btn'
+						type="primary"
+						onClick={this.addElement.bind(this, '阿拉伯语', 'children')}
+					> 添加子节点 </Button>
+					<p className='App-p'>当前选中id：{this.state.selectId}</p>
 					<AppTree
 						dataList={this.state.dataList}
 						onClick={(element, e) => this.handleClick(element, e)}
