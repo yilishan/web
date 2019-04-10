@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import {
 	Button,
 } from 'antd';
-import { func } from 'prop-types';
 
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
@@ -15,7 +14,7 @@ class AppTree extends React.Component {
 			return item.map((ele) => {
 				return (
 					<div
-						className='App-tree-node'
+						className={(this.props.selectId && this.props.selectId === ele.id) ? 'App-tree-node-selected' : 'App-tree-node'}
 						onClick={(e) => this.props.onClick(ele, e)}
 						onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
 						key={ele.id}
@@ -31,7 +30,7 @@ class AppTree extends React.Component {
 	}
 
 	render() {
-		let content = this.mapData(this.props.value);
+		let content = this.mapData(this.props.dataList);
 		return (
 			<div className='App-tree-root'>
 				{content}
@@ -43,6 +42,7 @@ class AppTree extends React.Component {
 let timer = 0;
 let delay = 200;
 let prevent = false;
+
 class App extends Component {
 	constructor() {
 		super();
@@ -64,6 +64,7 @@ class App extends Component {
 					},
 				},
 			},
+			selectId: '',
 			dataList: [
 				{
 					title: '学科',
@@ -115,6 +116,14 @@ class App extends Component {
 		};
 	}
 
+	// onKeyPress
+	handleKeyPress(e) {
+		console.log('按键：');
+		if (e.keyCode === 13) {
+			console.log('enter');
+		}
+	}
+
 	// onclick
 	handleClick(element, e) {
 		e.preventDefault();
@@ -139,24 +148,90 @@ class App extends Component {
 
 	doClick(element) {
 		console.log('单击:' + element.title, element.id);
+		this.setState({
+			selectId: element.id,
+		});
 	}
 
 	doDoubleClick(element) {
 		console.log('双击:' + element.title);
-		this.dataModify(element.id, element.title + '123');
+		// this.dataModify(element.id, element.title + '123', 'EDIT');
+		// this.deleteElement(element.id);
+		// this.addElement(element.id,'物理');
+		this.editElement(element.id, '物理');
 	}
 
-	//  input id & , then can do select/add/delete/modify/find
-	dataModify(id, value) {
+	// add element after id,
+	// TODO: generate unique id
+	addElement(id, titleText) {
+		let mylist = this.state.dataList;
+		let newElement = {
+			title: titleText,
+			id: '0009',
+			children: [
+
+			]
+		};
+
+		function mapList(item) {
+			if (item && Array.isArray(item)) {
+				for (let i = 0, len = item.length; i < len; i++) {
+					if (item[i].id === id) {
+						// handle here
+						console.log('添加：' + item[i].title);
+						item.splice(i + 1, 0, newElement);
+						return item;
+					}
+					if (item[i].children && Array.isArray(item[i].children)) {
+						item[i].children = mapList(item[i].children);
+					}
+				}
+			}
+			return item;
+		}
+
+		this.setState({
+			dataList: mapList(mylist),
+		});
+	}
+
+	// delete element with id
+	deleteElement(id) {
 		let mylist = this.state.dataList;
 
 		function mapList(item) {
 			if (item && Array.isArray(item)) {
 				for (let i = 0, len = item.length; i < len; i++) {
 					if (item[i].id === id) {
-						console.log(item[i].title, value);
 						// handle here
-						item[i].title = value;
+						console.log('删除：' + item[i].title);
+						item.splice(i, 1);
+						return item;
+					}
+					if (item[i].children && Array.isArray(item[i].children)) {
+						item[i].children = mapList(item[i].children);
+					}
+				}
+			}
+			return item;
+		}
+
+		this.setState({
+			dataList: mapList(mylist),
+		});
+	}
+
+	// edit element with id and titleText
+	editElement(id, titleText) {
+		let mylist = this.state.dataList;
+
+		function mapList(item) {
+			if (item && Array.isArray(item)) {
+				for (let i = 0, len = item.length; i < len; i++) {
+					if (item[i].id === id) {
+						// handle here
+						console.log('编辑：' + item[i].title);
+						item[i].title = titleText;
 						return item;
 					}
 					if (item[i].children && Array.isArray(item[i].children)) {
@@ -174,13 +249,20 @@ class App extends Component {
 
 	render() {
 		return (
-			<div className="App">
+			<div className="App"
+				onKeyPress={this.handleKeyPress}
+				tabIndex="0"
+			>
 				<header className="App-header">
-					<Button type="primary" onClick={() => output(this.state.data)}> show </Button>
+					<Button
+						type="primary"
+						onClick={() => output(this.state.data)}
+					> show </Button>
 					<AppTree
-						value={this.state.dataList}
+						dataList={this.state.dataList}
 						onClick={(element, e) => this.handleClick(element, e)}
 						onDoubleClick={(element, e) => this.handleDoubleClick(element, e)}
+						selectId={this.state.selectId}
 					/>
 				</header>
 			</div>

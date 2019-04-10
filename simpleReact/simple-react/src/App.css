@@ -46,3 +46,11 @@
     left: 30px;
     cursor: pointer;
 }
+
+.App-tree-node-selected {
+    color: #ff0f0f;
+    font-size: 16px;
+    position: relative;
+    left: 30px;
+    cursor: pointer;
+}
