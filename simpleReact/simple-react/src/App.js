@@ -4,14 +4,15 @@ import './App.css';
 import 'antd/dist/antd.css';
 import {
 	Button,
+	Input,
 } from 'antd';
 
 // History
-function History(props){
+function History(props) {
 	let content = props.history.map((item, index) => {
 		return (<a className='App-History-a' href='#' onClick={() => props.resetHistory(index)} key={index}>{index + 1}. {item.operation}：{item.title}</a>);
 	});
-	return(
+	return (
 		<div className='App-tree-root'>
 			<h3>历史记录</h3>
 			{content}
@@ -19,6 +20,7 @@ function History(props){
 	);
 }
 
+const { TextArea } = Input;
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
 	// show array data to tree Recursively 
@@ -32,7 +34,7 @@ class AppTree extends React.Component {
 						onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
 						key={ele.id}
 					>
-						{ele.title}
+						<Input type={'text'} style={{border:'0 solid #fff', marginTop:'2px'}} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
 						{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
 					</div>
 				);
@@ -95,46 +97,46 @@ class App extends Component {
 					title: '学科',
 					id: '0001',
 					children: [
-						// {
-						// 	title: '语文',
-						// 	id: '0002',
-						// 	children: [
-						// 		{
-						// 			title: '现代文',
-						// 			id: '0003',
-						// 			children: [
+						{
+							title: '语文',
+							id: '0002',
+							children: [
+								{
+									title: '现代文',
+									id: '0003',
+									children: [
 
-						// 			]
-						// 		},
-						// 		{
-						// 			title: '文言文',
-						// 			id: '0004',
-						// 			children: [
+									]
+								},
+								{
+									title: '文言文',
+									id: '0004',
+									children: [
 
-						// 			]
-						// 		},
-						// 	]
-						// },
-						// {
-						// 	title: '数学',
-						// 	id: '0005',
-						// 	children: [
-						// 		{
-						// 			title: '几何',
-						// 			id: '0006',
-						// 			children: [
+									]
+								},
+							]
+						},
+						{
+							title: '数学',
+							id: '0005',
+							children: [
+								{
+									title: '几何',
+									id: '0006',
+									children: [
 
-						// 			]
-						// 		},
-						// 		{
-						// 			title: '代数',
-						// 			id: '0007',
-						// 			children: [
+									]
+								},
+								{
+									title: '代数',
+									id: '0007',
+									children: [
 
-						// 			]
-						// 		},
-						// 	]
-						// },
+									]
+								},
+							]
+						},
 					]
 				},
 			],
@@ -319,7 +321,7 @@ class App extends Component {
 	}
 
 	// add history
-	addHistory(operation, title, list){
+	addHistory(operation, title, list) {
 		const historyLength = 5;
 		const [...mylist] = list;
 		let myHistory = this.state.history;
@@ -329,7 +331,7 @@ class App extends Component {
 			data: mylist,
 		};
 
-		while(myHistory.length >= historyLength){
+		while (myHistory.length >= historyLength) {
 			myHistory.shift();
 		}
 		myHistory.push(newElement);
@@ -340,7 +342,7 @@ class App extends Component {
 	}
 
 	// reset history to index
-	resetHistory(index){
+	resetHistory(index) {
 		let myHistory = this.state.history;
 		let myDataList = myHistory[index].data;
 		let deleteLength = myHistory.length - index - 1;
@@ -381,6 +383,7 @@ class App extends Component {
 						onClick={(element, e) => this.handleClick(element, e)}
 						onDoubleClick={(element, e) => this.handleDoubleClick(element, e)}
 						selectId={this.state.selectId}
+						editElement={(id, titleText) => this.editElement(id, titleText)}
 					/>
 					<History history={this.state.history} resetHistory={this.resetHistory.bind(this)}></History>
 				</header>
