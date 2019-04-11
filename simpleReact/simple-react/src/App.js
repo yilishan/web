@@ -6,6 +6,19 @@ import {
 	Button,
 } from 'antd';
 
+// History
+function History(props){
+	let content = props.history.map((item, index) => {
+		return (<a className='App-History-a' href='#' onClick={() => props.resetHistory(index)} key={index}>{index + 1}. {item.operation}：{item.title}</a>);
+	});
+	return(
+		<div className='App-tree-root'>
+			<h3>历史记录</h3>
+			{content}
+		</div>
+	);
+}
+
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
 	// show array data to tree Recursively 
@@ -65,52 +78,63 @@ class App extends Component {
 				},
 			},
 			idList: ['0001', '0002', '0003', '0004', '0005', '0006', '0007', '0008', '0009',],
+			history: [
+				// {
+				// 	operation: '添加',
+				// 	title: '语文',
+				// 	data: [{
+				// 		title: '几何',
+				// 		id: '0006',
+				// 		children: [],
+				// 	}],
+				// },
+			],
 			selectId: '',
 			dataList: [
 				{
 					title: '学科',
 					id: '0001',
 					children: [
-						{
-							title: '语文',
-							id: '0002',
-							children: [
-								{
-									title: '现代文',
-									id: '0003',
-									children: [
+						// {
+						// 	title: '语文',
+						// 	id: '0002',
+						// 	children: [
+						// 		{
+						// 			title: '现代文',
+						// 			id: '0003',
+						// 			children: [
 
-									]
-								},
-								{
-									title: '文言文',
-									id: '0004',
-									children: [
+						// 			]
+						// 		},
+						// 		{
+						// 			title: '文言文',
+						// 			id: '0004',
+						// 			children: [
 
-									]
-								},
-							]
-						},
-						{
-							title: '数学',
-							id: '0005',
-							children: [
-								{
-									title: '几何',
-									id: '0006',
-									children: [
+						// 			]
+						// 		},
+						// 	]
+						// },
+						// {
+						// 	title: '数学',
+						// 	id: '0005',
+						// 	children: [
+						// 		{
+						// 			title: '几何',
+						// 			id: '0006',
+						// 			children: [
 
-									]
-								},
-								{
-									title: '代数',
-									id: '0007',
-									children: [
+						// 			]
+						// 		},
+						// 		{
+						// 			title: '代数',
+						// 			id: '0007',
+						// 			children: [
 
-									]
-								},
-							]
-						},
+						// 			]
+						// 		},
+						// 	]
+						// },
 					]
 				},
 			],
@@ -206,8 +230,10 @@ class App extends Component {
 			return item;
 		}
 
+		mylist = mapList(mylist);
+		this.addHistory((type === 'current') ? '添加节点' : '插入子节点', titleText, mylist);
 		this.setState({
-			dataList: mapList(mylist),
+			dataList: mylist,
 		});
 	}
 
@@ -215,6 +241,7 @@ class App extends Component {
 	deleteElement() {
 		let mylist = this.state.dataList;
 		let id = this.state.selectId;
+		let myTitle = '';
 
 		if (id === '') {
 			return;
@@ -226,6 +253,7 @@ class App extends Component {
 					if (item[i].id === id) {
 						// handle here
 						console.log('删除：' + item[i].title);
+						myTitle = item[i].title;
 						item.splice(i, 1);
 						return item;
 					}
@@ -237,15 +265,18 @@ class App extends Component {
 			return item;
 		}
 
+		mylist = mapList(mylist);
+		this.addHistory('删除节点', myTitle, mylist);
 		this.setState({
 			selectId: '',
-			dataList: mapList(mylist),
+			dataList: mylist,
 		});
 	}
 
 	// edit element with id and titleText
 	editElement(id, titleText) {
 		let mylist = this.state.dataList;
+		let myTitle = '';
 
 		function mapList(item) {
 			if (item && Array.isArray(item)) {
@@ -253,6 +284,7 @@ class App extends Component {
 					if (item[i].id === id) {
 						// handle here
 						console.log('编辑：' + item[i].title);
+						myTitle = item[i].title;
 						item[i].title = titleText;
 						return item;
 					}
@@ -264,8 +296,10 @@ class App extends Component {
 			return item;
 		}
 
+		mylist = mapList(mylist);
+		this.addHistory('编辑节点', myTitle, mylist);
 		this.setState({
-			dataList: mapList(mylist),
+			dataList: mylist,
 		});
 	}
 
@@ -282,6 +316,41 @@ class App extends Component {
 			});
 		}
 		return id;
+	}
+
+	// add history
+	addHistory(operation, title, list){
+		const historyLength = 5;
+		const [...mylist] = list;
+		let myHistory = this.state.history;
+		let newElement = {
+			operation: operation,
+			title: title,
+			data: mylist,
+		};
+
+		while(myHistory.length >= historyLength){
+			myHistory.shift();
+		}
+		myHistory.push(newElement);
+		console.log('历史：', JSON.stringify(myHistory));
+		this.setState({
+			history: myHistory,
+		});
+	}
+
+	// reset history to index
+	resetHistory(index){
+		let myHistory = this.state.history;
+		let myDataList = myHistory[index].data;
+		let deleteLength = myHistory.length - index - 1;
+		myHistory.splice(index, deleteLength);
+		console.log('回溯历史：', myHistory, myDataList);
+		this.setState({
+			dataList: myDataList,
+			history: myHistory,
+			selectId: '',
+		});
 	}
 
 	render() {
@@ -313,32 +382,10 @@ class App extends Component {
 						onDoubleClick={(element, e) => this.handleDoubleClick(element, e)}
 						selectId={this.state.selectId}
 					/>
+					<History history={this.state.history} resetHistory={this.resetHistory.bind(this)}></History>
 				</header>
 			</div>
 		);
-	}
-}
-
-// 将对象展开成目录树
-function treeList(arr, obj, str) {
-	if (obj) {
-		for (let i in obj) {
-			arr.push(str + i);
-			if (typeof obj[i] === 'object') {
-				treeList(arr, obj[i], str + '|----');
-			} else {
-				arr.push(str + '|----' + obj[i]);
-			}
-		}
-		return arr;
-	}
-}
-
-// 输出目录树
-function output(obj) {
-	let resarr = treeList([], obj, '|----');
-	for (let i in resarr) {
-		console.log(resarr[i]);
 	}
 }
 
