@@ -20,7 +20,6 @@ function History(props) {
 	);
 }
 
-const { TextArea } = Input;
 // input obj, return TreeNode of Tree
 class AppTree extends React.Component {
 	// show array data to tree Recursively 
@@ -34,7 +33,7 @@ class AppTree extends React.Component {
 						onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
 						key={ele.id}
 					>
-						<Input type={'text'} style={{border:'0 solid #fff', marginTop:'2px'}} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
+						<Input type={'text'} disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true} style={{border:'0 solid #fff', marginTop:'2px'}} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
 						{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
 					</div>
 				);
@@ -151,7 +150,7 @@ class App extends Component {
 		switch (e.key) {
 			case 'Enter':
 				if (selectId && selectId !== '') {
-					me.addElement('物理', 'current');
+					me.addElement('null', 'current');
 				}
 				break;
 			default:
@@ -192,7 +191,7 @@ class App extends Component {
 		// this.dataModify(element.id, element.title + '123', 'EDIT');
 		// this.deleteElement();
 		// this.addElement('物理');
-		this.editElement(element.id, '物理');
+		this.editElement(element.id, 'null');
 	}
 
 	// add element after id, type: current/children
@@ -370,12 +369,12 @@ class App extends Component {
 					<Button
 						className='App-btn'
 						type="primary"
-						onClick={this.addElement.bind(this, '化学', 'current')}
+						onClick={this.addElement.bind(this, 'null', 'current')}
 					> 插入节点(Enter) </Button>
 					<Button
 						className='App-btn'
 						type="primary"
-						onClick={this.addElement.bind(this, '阿拉伯语', 'children')}
+						onClick={this.addElement.bind(this, 'null', 'children')}
 					> 添加子节点 </Button>
 					<p className='App-p'>当前选中id：{this.state.selectId}</p>
 					<AppTree
