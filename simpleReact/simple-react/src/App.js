@@ -10,11 +10,11 @@ import {
 // History
 function History(props) {
 	let content = props.history.map((item, index) => {
-		return (<a className='App-History-a' href='#' onClick={() => props.resetHistory(index)} key={index}>{index + 1}. {item.operation}：{item.title}</a>);
+		return (<a href='#' onClick={() => props.resetHistory(index)} key={index}>{index + 1}. {item.operation}：{item.title}</a>);
 	});
 	return (
 		<div className='App-History'>
-			<h3>历史记录</h3>
+			<h6>历史记录</h6>
 			{content}
 		</div>
 	);
@@ -40,11 +40,12 @@ class AppTree extends React.Component {
 								<Input
 									type={'text'}
 									// disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true}
-									style={{ border: '0 solid #fff', margin: '1px' }}
+									style={{ border: '0 solid #fff', margin: '1px', width: '8em', padding: '0' }}
 									defaultValue={ele.title}
 									onChange={(e) => this.props.editElement(ele.id, e.target.value)}
 									onClick={(e) => this.props.onClick(ele, e)}
-									onDoubleClick={(e) => this.props.onDoubleClick(ele, e)} />
+									onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
+								/>
 							</div>
 							{(ele.showChildren && ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
 						</div>
@@ -215,7 +216,6 @@ class App extends Component {
 	}
 
 	// add element after id, type: current/children
-	// TODO: generate unique id
 	addElement(titleText, type) {
 		let mylist = this.state.dataList;
 		let id = this.state.selectId;
@@ -376,7 +376,7 @@ class App extends Component {
 
 	// add history
 	addHistory(operation, title, list) {
-		const historyLength = 30;
+		const historyLength = 50;
 		const [...mylist] = list;
 		let myHistory = this.state.history;
 		let newElement = {
@@ -395,7 +395,7 @@ class App extends Component {
 		});
 	}
 
-	// reset history to index
+	// reset history to the index step
 	resetHistory(index) {
 		let myHistory = this.state.history;
 		let myDataList = myHistory[index].data;
@@ -424,23 +424,20 @@ class App extends Component {
 						editElement={(id, titleText) => this.editElement(id, titleText)}
 						changeShowChildren={(id) => this.changeShowChildren(id)}
 					/>
-					<div className='App-header-div'>
+					<div className='App-drawbord'>
 						<Button
-							className='App-btn'
 							type="danger"
 							onClick={this.deleteElement.bind(this)}
 						> 删除 </Button>
 						<Button
-							className='App-btn'
 							type="primary"
 							onClick={this.addElement.bind(this, 'null', 'current')}
 						> 插入节点(Enter) </Button>
 						<Button
-							className='App-btn'
 							type="primary"
 							onClick={this.addElement.bind(this, 'null', 'children')}
 						> 添加子节点 </Button>
-						<p className='App-p'>当前选中id：{this.state.selectId}</p>
+						<p>当前选中id：{this.state.selectId}</p>
 					</div>
 					<History history={this.state.history} resetHistory={this.resetHistory.bind(this)}></History>
 				</header>

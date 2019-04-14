@@ -14,6 +14,14 @@
 
 -------------
 
+# how to use
+1. clone to your workspace
+2. enter into project directory
+3. npm install
+4. npm run start
+
+-------------
+
 # plan
 ## *2019-04-08*
 ### 写一个tree控件
@@ -31,6 +39,7 @@
 - [X] 撤销操作
 - [X] 编辑字段功能
 - [X] 展开收起功能
+- [ ] 全部展开/收起（节点及子节点递归操作）
 - [ ] 导航竖线存在对齐问题
 - [ ] 搜索
 - [ ] 可以定制的样式（参考antd）
@@ -59,3 +68,6 @@
 ### 5. 使用input后功能如何设置需要重新思考
 
 ### 6. npm run start 启动缓慢
+
+### 7. 思维导图实现思路
+参考:[用JS的库实现在线思维导图](https://www.crifan.com/use_js_lib_implement_online_mind_map/)
