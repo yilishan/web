@@ -12,11 +12,17 @@
     /* background-color: #282c34; */
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     font-size: calc(10px + 2vmin);
     color: white;
+}
+
+.App-header-div {
+    display: flex;
+    flex-direction: column;
+    /* flex: 1; */
 }
 
 .App-link {
@@ -34,25 +40,61 @@
 }
 
 .App-tree-root {
+    /* flex: 1; */
     text-align: left;
     position: relative;
-    left: -30px;
+    left: 0px;
+}
+
+/* .App-tree-node::before{
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-left: 8px solid currentColor;
+    position: absolute;
+    top: 8px;
+    left: -15px;
+} */
+
+.App-tree-node-father {
+    display: flex;
+    flex-direction: row;
+}
+
+.App-tree-node-left {
+    width: 30px;
+    background-color: #61dafb;
+    /* border-right: 1px dotted #000000;  */
+    text-align: center;
+}
+
+.App-tree-node-left>p {
+    display: flex;
+    justify-content:center;
+    align-items:Center;
+    font-size: 16px;
+    height: 1em;
+    margin: .5em 0;
+    color: #ff0f0f;
+}
+
+.App-tree-node-line {
+    width: 0;
+    height: calc(100% - 32px);
+    border-right: 1px dotted #999; 
+    margin-left: 15px;
 }
 
 .App-tree-node {
     color: #000000;
     font-size: 16px;
-    position: relative;
-    left: 30px;
     cursor: pointer;
 }
 
 .App-tree-node-selected {
     color: #ff0f0f;
-    font-size: 16px;
-    position: relative;
-    left: 30px;
-    cursor: pointer;
 }
 
 .App-p {
@@ -61,6 +103,10 @@
 
 .App-btn {
     margin-top: 15px;
+}
+
+.App-History {
+    /* flex: 1; */
 }
 
 .App-History-a {

@@ -13,7 +13,7 @@ function History(props) {
 		return (<a className='App-History-a' href='#' onClick={() => props.resetHistory(index)} key={index}>{index + 1}. {item.operation}：{item.title}</a>);
 	});
 	return (
-		<div className='App-tree-root'>
+		<div className='App-History'>
 			<h3>历史记录</h3>
 			{content}
 		</div>
@@ -27,14 +27,20 @@ class AppTree extends React.Component {
 		if (item && Array.isArray(item)) {
 			return item.map((ele) => {
 				return (
-					<div
-						className={(this.props.selectId && this.props.selectId === ele.id) ? 'App-tree-node-selected' : 'App-tree-node'}
-						onClick={(e) => this.props.onClick(ele, e)}
-						onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
-						key={ele.id}
-					>
-						<Input type={'text'} disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true} style={{border:'0 solid #fff', marginTop:'2px'}} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
-						{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
+					<div className='App-tree-node-father' key={'father' + ele.id}>
+						<div className='App-tree-node-left' key={'left' + ele.id}>
+							<p>+</p>
+							<div className='App-tree-node-line' />
+						</div>
+						<div
+							className={(this.props.selectId && this.props.selectId === ele.id) ? 'App-tree-node App-tree-node-selected' : 'App-tree-node'}
+							onClick={(e) => this.props.onClick(ele, e)}
+							onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
+							key={'treeNode' + ele.id}
+						>
+							<Input type={'text'} disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true} style={{ border: '0 solid #fff', marginTop: '2px' }} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
+							{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
+						</div>
 					</div>
 				);
 			});
@@ -361,22 +367,6 @@ class App extends Component {
 				tabIndex="0"
 			>
 				<header className="App-header">
-					<Button
-						className='App-btn'
-						type="danger"
-						onClick={this.deleteElement.bind(this)}
-					> 删除 </Button>
-					<Button
-						className='App-btn'
-						type="primary"
-						onClick={this.addElement.bind(this, 'null', 'current')}
-					> 插入节点(Enter) </Button>
-					<Button
-						className='App-btn'
-						type="primary"
-						onClick={this.addElement.bind(this, 'null', 'children')}
-					> 添加子节点 </Button>
-					<p className='App-p'>当前选中id：{this.state.selectId}</p>
 					<AppTree
 						dataList={this.state.dataList}
 						onClick={(element, e) => this.handleClick(element, e)}
@@ -384,6 +374,24 @@ class App extends Component {
 						selectId={this.state.selectId}
 						editElement={(id, titleText) => this.editElement(id, titleText)}
 					/>
+					<div className='App-header-div'>
+						<Button
+							className='App-btn'
+							type="danger"
+							onClick={this.deleteElement.bind(this)}
+						> 删除 </Button>
+						<Button
+							className='App-btn'
+							type="primary"
+							onClick={this.addElement.bind(this, 'null', 'current')}
+						> 插入节点(Enter) </Button>
+						<Button
+							className='App-btn'
+							type="primary"
+							onClick={this.addElement.bind(this, 'null', 'children')}
+						> 添加子节点 </Button>
+						<p className='App-p'>当前选中id：{this.state.selectId}</p>
+					</div>
 					<History history={this.state.history} resetHistory={this.resetHistory.bind(this)}></History>
 				</header>
 			</div>
