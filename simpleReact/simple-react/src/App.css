@@ -42,8 +42,11 @@
 .App-tree-root {
     /* flex: 1; */
     text-align: left;
+    align-self: flex-start;
     position: relative;
     left: 0px;
+    max-height: 100vh;
+    overflow: auto;
 }
 
 /* .App-tree-node::before{
@@ -110,8 +113,7 @@
     color: currentColor;
 }
 
-.App-tree-node-content>Input {
-}
+.App-tree-node-content>Input {}
 
 .App-p {
     color: #000000;
@@ -123,6 +125,8 @@
 
 .App-History {
     /* flex: 1; */
+    max-height: 100vh;
+    overflow: auto;
 }
 
 .App-History-a {

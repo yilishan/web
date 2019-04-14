@@ -376,7 +376,7 @@ class App extends Component {
 
 	// add history
 	addHistory(operation, title, list) {
-		const historyLength = 5;
+		const historyLength = 30;
 		const [...mylist] = list;
 		let myHistory = this.state.history;
 		let newElement = {
