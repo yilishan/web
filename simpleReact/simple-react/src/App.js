@@ -29,17 +29,24 @@ class AppTree extends React.Component {
 				return (
 					<div className='App-tree-node-father' key={'father' + ele.id}>
 						<div className='App-tree-node-left' key={'left' + ele.id}>
-							<p>+</p>
 							<div className='App-tree-node-line' />
 						</div>
 						<div
 							className={(this.props.selectId && this.props.selectId === ele.id) ? 'App-tree-node App-tree-node-selected' : 'App-tree-node'}
-							onClick={(e) => this.props.onClick(ele, e)}
-							onDoubleClick={(e) => this.props.onDoubleClick(ele, e)}
 							key={'treeNode' + ele.id}
 						>
-							<Input type={'text'} disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true} style={{ border: '0 solid #fff', marginTop: '2px' }} defaultValue={ele.title} onChange={(e) => this.props.editElement(ele.id, e.target.value)} />
-							{(ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
+							<div className='App-tree-node-content'>
+								<p onClick={() => this.props.changeShowChildren(ele.id)}>{ele.showChildren ? '-' : '+'}</p>
+								<Input
+									type={'text'}
+									// disabled={(this.props.selectId && this.props.selectId === ele.id) ? false : true}
+									style={{ border: '0 solid #fff', margin: '1px' }}
+									defaultValue={ele.title}
+									onChange={(e) => this.props.editElement(ele.id, e.target.value)}
+									onClick={(e) => this.props.onClick(ele, e)}
+									onDoubleClick={(e) => this.props.onDoubleClick(ele, e)} />
+							</div>
+							{(ele.showChildren && ele.children && Array.isArray(ele.children)) ? this.mapData(ele.children) : ''}
 						</div>
 					</div>
 				);
@@ -101,14 +108,17 @@ class App extends Component {
 				{
 					title: '学科',
 					id: '0001',
+					showChildren: true,
 					children: [
 						{
 							title: '语文',
 							id: '0002',
+							showChildren: true,
 							children: [
 								{
 									title: '现代文',
 									id: '0003',
+									showChildren: true,
 									children: [
 
 									]
@@ -116,6 +126,7 @@ class App extends Component {
 								{
 									title: '文言文',
 									id: '0004',
+									showChildren: true,
 									children: [
 
 									]
@@ -125,10 +136,12 @@ class App extends Component {
 						{
 							title: '数学',
 							id: '0005',
+							showChildren: true,
 							children: [
 								{
 									title: '几何',
 									id: '0006',
+									showChildren: true,
 									children: [
 
 									]
@@ -136,6 +149,7 @@ class App extends Component {
 								{
 									title: '代数',
 									id: '0007',
+									showChildren: true,
 									children: [
 
 									]
@@ -210,6 +224,7 @@ class App extends Component {
 		let newElement = {
 			title: titleText,
 			id: this.getId(),
+			showChildren: true,
 			children: [
 
 			]
@@ -310,6 +325,40 @@ class App extends Component {
 		});
 	}
 
+	// change showChildren
+	changeShowChildren(id) {
+		let mylist = this.state.dataList;
+		let myTitle = '';
+		let historyText = '';
+
+		function mapList(item) {
+			if (item && Array.isArray(item)) {
+				for (let i = 0, len = item.length; i < len; i++) {
+					if (item[i].id === id && item[i].children.length > 0) {
+						// handle here
+						console.log('展开/收起：' + item[i].title);
+						myTitle = item[i].title;
+						historyText = item[i].showChildren ? '收起节点' : '展开节点';
+						item[i].showChildren = !item[i].showChildren;
+						return item;
+					}
+					if (item[i].children && Array.isArray(item[i].children)) {
+						item[i].children = mapList(item[i].children);
+					}
+				}
+			}
+			return item;
+		}
+
+		mylist = mapList(mylist);
+		if (historyText !== '') {
+			this.addHistory(historyText, myTitle, mylist);
+		}
+		this.setState({
+			dataList: mylist,
+		});
+	}
+
 	// getId, without repetition, use timestamp right now
 	getId() {
 		let id = Date.now().toString();
@@ -373,6 +422,7 @@ class App extends Component {
 						onDoubleClick={(element, e) => this.handleDoubleClick(element, e)}
 						selectId={this.state.selectId}
 						editElement={(id, titleText) => this.editElement(id, titleText)}
+						changeShowChildren={(id) => this.changeShowChildren(id)}
 					/>
 					<div className='App-header-div'>
 						<Button

@@ -64,37 +64,53 @@
 }
 
 .App-tree-node-left {
-    width: 30px;
-    background-color: #61dafb;
+    width: 31px;
+    /* background-color: #61dafb; */
     /* border-right: 1px dotted #000000;  */
     text-align: center;
-}
-
-.App-tree-node-left>p {
-    display: flex;
-    justify-content:center;
-    align-items:Center;
-    font-size: 16px;
-    height: 1em;
-    margin: .5em 0;
-    color: #ff0f0f;
+    z-index: 1;
 }
 
 .App-tree-node-line {
     width: 0;
-    height: calc(100% - 32px);
-    border-right: 1px dotted #999; 
+    /* height: 100%; */
+    height: calc(100% - 36px);
+    border-right: 1px dotted #999;
     margin-left: 15px;
+    position: relative;
+    top: 34px;
+    left: 30px;
 }
 
 .App-tree-node {
     color: #000000;
     font-size: 16px;
     cursor: pointer;
+    position: relative;
+    /* left: 30px; */
 }
 
 .App-tree-node-selected {
     color: #ff0f0f;
+}
+
+.App-tree-node-content {
+    display: flex;
+    flex-direction: row;
+}
+
+.App-tree-node-content>p {
+    font-size: 16px;
+    width: 31px;
+    height: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    margin: .5em 0;
+    color: currentColor;
+}
+
+.App-tree-node-content>Input {
 }
 
 .App-p {
