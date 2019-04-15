@@ -41,6 +41,7 @@
     position: relative;
     left: 0px;
     overflow: auto;
+    user-select: none;
 }
 
 /* .App-tree-node::before{
@@ -125,6 +126,7 @@ p {
 .App-drawbord>p {
     color: #000000;
     font-size: 14px;
+    user-select: none;
 }
 
 .App-History {
