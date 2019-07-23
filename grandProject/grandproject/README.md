@@ -1,3 +1,41 @@
+# Grand Project
+
+## 2019-07-23
+1. 安装cnpm：npm install -g cnpm --registry=https://registry.npm.taobao.org
+2. 安装create-react-app：cnpm i -g create-react-app
+3. create-react-app grandproject
+4. cd grandproject/
+5. 运行：npm start，开发环境可以实时更新，至此开发环境配置完了
+6. 安装redux：cnpm i redux --save
+7. 安装express：cnpm i express --save
+8. 新建server/server.js，并添加express listen和get
+9. cd server, node server.js, 运行成功后可以在http://localhost:9093/看到返回结果
+10. 但是上述node启动服务不会热更新，所以可以使用nodemon实现热更新，cnpm i -g nodemon, 以后直接运行nodemon server.js即可热更新
+11. 安装mongoose: cnpm i mongoose --save，学习mongoose的增删改查
+12. 安装antd-mobile：cnpm i antd-mobile@next --save, 官网：https://mobile.ant.design/docs/react/introduce-cn
+13. antd按需加载配置文档：https://mobile.ant.design/docs/react/use-with-create-react-app-cn
+14. redux学习：
+   - redux专注于状态管理，和react解耦
+   - 单一状态，单向数据流
+   > 老赵有个保险箱（store），所有状态在那里都有记录（state），需要改变的时候，告诉专员（dispatch）要干什么（action），处理变化的人（reducer）拿到state和action生成新的state
+
+   - 安装redux： cnpm i redux --save
+   - 订阅发布的设计模式
+   - 和react一起使用:
+      - 把store.dispatch方法传递给组件，内部可以调用修改状态
+      - Subscribe订阅render函数，每次修改都重新渲染
+      - redux相关内容，移到单独的文件index.redux.js单独管理
+      - 基本应用：https://www.bilibili.com/video/av47296993/?p=13
+      - 更进一步：https://www.bilibili.com/video/av47296993/?p=16 
+         - 异步处理：使用redux-thunk中间件，安装：cnpm i redux-thunk --save
+         - 调试工具：cnpm i redux-devtools-extension，chrome中redux工具
+         - 更优雅的和react结合：使用react-redux优雅连接react和redux
+            1. 安装：cnpm i react-redux --save
+            2. 忘记subscribe，记住reducer，action和dispatch即可
+            3. react-redux提供provider和connect两个接口来连接，里应外合
+
+
+----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
