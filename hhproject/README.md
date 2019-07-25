@@ -5,7 +5,7 @@
 3. 如何使用babel？
 4. 如何antd按需加载？
 5. 如何使用less？
-6. 
+6. 设置路由？
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

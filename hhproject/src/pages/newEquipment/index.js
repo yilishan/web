@@ -4,7 +4,7 @@ import 'antd/dist/antd.css';
 import './index.css'
 
 const { Step } = Steps;
-const curPage = 0;
+const curPage = 1;
 const identity = [
     { 'name': '技术员', 'id': 1001 },
     { 'name': '资料员', 'id': 1002 },
@@ -12,7 +12,7 @@ const identity = [
     { 'name': '现场检测人员', 'id': 1004 },
 ];
 
-class Home extends React.Component {
+class NewEquipment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -39,21 +39,10 @@ class Home extends React.Component {
                     }
                 </Steps>
 
-                <Row type="flex" justify="center" className="row">
-                    {
-                        identity.map((item) => {
-                            return(
-                                <Col span={4} key={item.id}>
-                                    <Button type="primary" className="button" onClick={() => this.handleClick(item.name)}>{item.name}</Button>
-                                </Col>
-                            ) 
-                        })
-                    }
-                </Row>
             </div >
         );
     }
 }
 
-export default Home;
+export default NewEquipment;
 
