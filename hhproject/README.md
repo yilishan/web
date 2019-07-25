@@ -1,7 +1,11 @@
 # Grand Project
 ## 2019-07-25
 1. 创建项目
-
+2. 遇到vscode中rg.exe内存占用过大的问题，使用cnpm install --by=npm重装后解决
+3. 如何使用babel？
+4. 如何antd按需加载？
+5. 如何使用less？
+6. 
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
