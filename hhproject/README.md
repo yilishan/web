@@ -7,6 +7,14 @@
 5. 如何使用less？
 6. 设置路由？
 
+## 2019-07-26
+1. 安装react-router：npm install --save react-router ， 文档：http://react-guide.github.io/react-router-cn/index.html
+2. 安装react-router-dom：npm install --save react-router-dom
+3. 全局变量置于：global/config.js
+4. 提取组件NameShow、MySteps
+5. 解决组件中绑定this的问题
+6. 通过withRouter实现页面跳转和传参：https://www.jianshu.com/p/52528ebb771d
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

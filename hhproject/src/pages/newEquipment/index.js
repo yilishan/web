@@ -1,16 +1,11 @@
 import React from 'react';
-import { Steps, Row, Col, Button } from 'antd';
+import { } from 'antd';
 import 'antd/dist/antd.css';
 import './index.css'
+import '../../global/config.js'
+import MySteps from '../../components/mySteps/index.js';
 
-const { Step } = Steps;
 const curPage = 1;
-const identity = [
-    { 'name': '技术员', 'id': 1001 },
-    { 'name': '资料员', 'id': 1002 },
-    { 'name': '评片洗片人', 'id': 1003 },
-    { 'name': '现场检测人员', 'id': 1004 },
-];
 
 class NewEquipment extends React.Component {
     constructor(props) {
@@ -21,7 +16,8 @@ class NewEquipment extends React.Component {
     }
 
     componentDidMount() {
-        document.title = this.props.title[curPage];
+        document.title = global.title[curPage].name;
+        // console.log('this.props.location.state:', this.props.location.state);
     }
 
     handleClick(name){
@@ -31,13 +27,7 @@ class NewEquipment extends React.Component {
     render() {
         return (
             <div>
-                <Steps current={curPage} size="small" labelPlacement="vertical" className="steps">
-                    {
-                        this.props.title.map((item) => {
-                            return <Step title={item} description="" key={item} />
-                        })
-                    }
-                </Steps>
+                <MySteps curPage={curPage} />
 
             </div >
         );
