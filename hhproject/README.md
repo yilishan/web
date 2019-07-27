@@ -19,7 +19,14 @@
 1. 安装axios：npm isntall axios --save
 2. 使用https://www.mockapi.io 在线模拟数据，接口如：http://5d3bcfa4552bfb00148e0449.mockapi.io/mock/v1/test
 3. axios请求跨域问题：package.json中添加"proxy": "http://5d3bcfa4552bfb00148e0449.mockapi.io"
-4. 
+4. 添加server.js，进入目录后启动服务器过程：
+   - 启动mongodb
+   - 启动服务nodemon server.js
+   - 服务器地址：http://localhost:9093
+5. server返回静态数据http://localhost:9093/title & http://localhost:9093/identity，实现和mockapi.io相同功能
+6. 考虑常用数据缓存机制，比如在global中设置常用数据，页面跳转直接从其中获取。同时每次进入时更新global数据，从而达到无感拉取数据的过程
+7. 如何打包、发布？
+8. 如何配置数据库自启动？
 
 
 ----

@@ -1,10 +1,11 @@
 import React from 'react';
-import { } from 'antd';
+import { PageHeader  } from 'antd';
 import 'antd/dist/antd.css';
 import './index.css'
 import '../../global/config.js'
-import axios from 'axios';
+// import axios from 'axios';
 import MySteps from '../../components/mySteps/index.js';
+import EquiSelector from '../../components/equiSelector/index.js';
 
 const curPage = 1;
 
@@ -12,23 +13,31 @@ class NewEquipment extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            name: null,
+            title: null,
         }
     }
 
     componentDidMount() {
         const me = this;
         document.title = global.title[curPage].name;
-        // console.log('this.props.location.state:', this.props.location.state);
-        
+        console.log('this.props.location.state:', this.props.location.state);
+        if(me.props.location.state.name){
+            me.setState({
+                name: me.props.location.state.name
+            });
+        }
+
+        /*  
         axios.get('/title').then(function(res){
             console.log(res);
             me.setState({
-                data: res.data
+                title: res.data
             });
         }).catch(function(err){
             console.log(err);
-        });
+        }); 
+        */
     }
 
     handleClick(name){
@@ -40,12 +49,13 @@ class NewEquipment extends React.Component {
             <div>
                 <MySteps curPage={curPage} />
                 {
-                    this.state.data ?
-                    this.state.data.map((item, index) => {
-                        return <div key={index}>{item.name}</div>
-                    })
-                    :null
+                    this.state.name ?
+                    <PageHeader title="小猴" subTitle={this.state.name} />
+                    : null
                 }
+
+                <EquiSelector />
+
             </div>
         );
     }

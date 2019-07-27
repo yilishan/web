@@ -40,5 +40,5 @@
     "babel-cli": "^6.26.0",
     "babel-preset-latest": "^6.24.1"
   },
-  "proxy": "http://5d3bcfa4552bfb00148e0449.mockapi.io/mock/v1"
+  "proxy": "http://localhost:9093"
 }
