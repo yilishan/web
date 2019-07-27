@@ -3,6 +3,7 @@ import { } from 'antd';
 import 'antd/dist/antd.css';
 import './index.css'
 import '../../global/config.js'
+import axios from 'axios';
 import MySteps from '../../components/mySteps/index.js';
 
 const curPage = 1;
@@ -16,8 +17,18 @@ class NewEquipment extends React.Component {
     }
 
     componentDidMount() {
+        const me = this;
         document.title = global.title[curPage].name;
         // console.log('this.props.location.state:', this.props.location.state);
+        
+        axios.get('/title').then(function(res){
+            console.log(res);
+            me.setState({
+                data: res.data
+            });
+        }).catch(function(err){
+            console.log(err);
+        });
     }
 
     handleClick(name){
@@ -28,8 +39,14 @@ class NewEquipment extends React.Component {
         return (
             <div>
                 <MySteps curPage={curPage} />
-
-            </div >
+                {
+                    this.state.data ?
+                    this.state.data.map((item, index) => {
+                        return <div key={index}>{item.name}</div>
+                    })
+                    :null
+                }
+            </div>
         );
     }
 }

@@ -15,6 +15,13 @@
 5. 解决组件中绑定this的问题
 6. 通过withRouter实现页面跳转和传参：https://www.jianshu.com/p/52528ebb771d
 
+## 2019-07-27
+1. 安装axios：npm isntall axios --save
+2. 使用https://www.mockapi.io 在线模拟数据，接口如：http://5d3bcfa4552bfb00148e0449.mockapi.io/mock/v1/test
+3. axios请求跨域问题：package.json中添加"proxy": "http://5d3bcfa4552bfb00148e0449.mockapi.io"
+4. 
+
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

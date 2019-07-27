@@ -4,6 +4,7 @@ import { Row, Col } from 'antd';
 import { withRouter  } from 'react-router-dom';
 import './index.css';
 import '../../global/config.js';
+import axios from 'axios';
 import NameShow from '../../components/nameShow/index.js';
 import MySteps from '../../components/mySteps/index.js';
 
@@ -13,8 +14,20 @@ class Home extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            identity: [],
         }
+    }
+
+    componentWillMount(){
+        const me = this;
+        axios.get('/identity').then(function(res){
+            console.log(res);
+            me.setState({
+                identity: res.data
+            });
+        }).catch(function(err){
+            console.log(err);
+        });  
     }
 
     componentDidMount() {
@@ -36,13 +49,15 @@ class Home extends React.Component {
 
                 <Row type="flex" justify="center" className="row">
                     {
-                        global.identity.map((item) => {
+                        this.state.identity ?
+                        this.state.identity.map((item, index) => {
                             return(
-                                <Col span={4} key={item.id}>
+                                <Col span={4} key={index}>
                                     <NameShow title={item.name} handleClick={this.handleClick} this={this} />
                                 </Col>
                             ) 
                         })
+                        : null
                     }
                 </Row>
             </div >
