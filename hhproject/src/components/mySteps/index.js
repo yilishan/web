@@ -1,5 +1,4 @@
 import React from 'react';
-import 'antd/dist/antd.css';
 import { Steps } from 'antd';
 import './index.css';
 import { withRouter  } from 'react-router-dom';

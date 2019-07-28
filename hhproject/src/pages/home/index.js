@@ -1,5 +1,4 @@
 import React from 'react';
-import 'antd/dist/antd.css';
 import { Row, Col } from 'antd';
 import { withRouter  } from 'react-router-dom';
 import './index.css';

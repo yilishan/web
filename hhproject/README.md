@@ -3,7 +3,32 @@
 1. 创建项目
 2. 遇到vscode中rg.exe内存占用过大的问题，使用cnpm install --by=npm重装后解决
 3. 如何使用babel？
-4. 如何antd按需加载？
+4. 如何antd按需加载？参考：https://www.cnblogs.com/yulingjia/p/9724052.html ， https://blog.csdn.net/zoepriselife316/article/details/88063171
+   - npm install customize-cra --save
+   - npm install react-app-rewired@2.x --save
+   - 根目录添加config-overrides.js，内容见内
+   - npm install less-loader --save
+   - 修改package.json：
+        ```json 
+        "scripts": {
+            "start": "react-app-rewired start",
+            "build": "react-app-rewired build",
+            "test": "react-app-rewired test",
+            "eject": "react-app-rewired eject"
+        }
+        ```
+   - 根目录添加文件.babelrc
+        ```json
+        "plugins": [
+            ["import", {
+                "libraryName": "antd",
+                "libraryDirectory": "es",
+                "style": "css" // `style: true` 会加载 less 文件
+            }],
+            "transform-runtime"
+        ]
+        ```   
+   - 重启项目
 5. 如何使用less？
 6. 设置路由？
 

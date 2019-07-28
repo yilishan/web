@@ -1,6 +1,5 @@
 import React from 'react';
 import { PageHeader  } from 'antd';
-import 'antd/dist/antd.css';
 import './index.css'
 import '../../global/config.js'
 // import axios from 'axios';
@@ -50,11 +49,11 @@ class NewEquipment extends React.Component {
                 <MySteps curPage={curPage} />
                 {
                     this.state.name ?
-                    <PageHeader title="小猴" subTitle={this.state.name} />
+                    <PageHeader title="小猫咪" subTitle={this.state.name} />
                     : null
                 }
 
-                <EquiSelector />
+                {/* <EquiSelector /> */}
 
             </div>
         );
