@@ -7,6 +7,7 @@
    - npm install customize-cra --save
    - npm install react-app-rewired@2.x --save
    - 根目录添加config-overrides.js，内容见内
+   - npm install less --save
    - npm install less-loader --save
    - 修改package.json：
         ```json 
