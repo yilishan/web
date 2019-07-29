@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Home from './pages/home/index';
 import NewEquipment from './pages/newEquipment/index';
+import Register from './pages/register/index';
+import Login from './pages/login/index';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 
@@ -12,8 +14,8 @@ ReactDOM.render(
             <div>
                 <Route path='/' exact component={ Home } />
                 <Route path='/newequip' component={ NewEquipment } />
-                <Route path='/a' component={ Home } />
-                <Route path='/b' component={ NewEquipment } />
+                <Route path='/login' component={ Login } />
+                <Route path='/register' component={ Register } />
                 <Route path='/c' component={ Home } />
                 <Route path='/d' component={ NewEquipment } />
             </div>

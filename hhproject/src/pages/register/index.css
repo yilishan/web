@@ -1,0 +1,24 @@
+.root{
+    text-align: center;
+}
+
+.avatar{
+    margin-top: 100px;
+}
+
+.register-form {
+    max-width: 300px;
+    margin: 30px auto;
+}
+
+.register-form-forgot {
+    float: left;
+}
+
+.register-form-register{
+    float: right;
+}
+
+.register-form-button {
+    width: 100%;
+}

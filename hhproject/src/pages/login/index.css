@@ -1,0 +1,24 @@
+.root{
+    text-align: center;
+}
+
+.avatar{
+    margin-top: 100px;
+}
+
+.login-form {
+    max-width: 300px;
+    margin: 30px auto;
+}
+
+.login-form-forgot {
+    float: left;
+}
+
+.login-form-register{
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}

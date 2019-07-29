@@ -4,7 +4,7 @@ import './index.css'
 import '../../global/config.js'
 // import axios from 'axios';
 import MySteps from '../../components/mySteps/index.js';
-import EquiSelector from '../../components/equiSelector/index.js';
+// import EquiSelector from '../../components/equiSelector/index.js';
 
 const curPage = 1;
 
