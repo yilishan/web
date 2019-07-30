@@ -3,7 +3,7 @@ import { Input, Button, Form, Icon, Avatar } from 'antd';
 import './index.css';
 import '../../global/config.js';
 import img from '../../image/axin.jpg';
-// import axios from 'axios';
+import axios from 'axios';
 
 // TODO md5加密
 // TODO 服务器获取验证
@@ -20,11 +20,39 @@ class NormalLoginForm extends React.Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        const me = this;
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+
+                axios.post('/login', {
+                    username: values.username,
+                    password: values.password
+                }).then(function (res) {
+                    console.log('login res:', res);
+                    switch (res.data.code) {
+                        case 1:
+                            console.log('成功', res.data.toast);
+                            break;
+                        case -1:
+                            console.log('错误', res.data.toast);
+                            break;
+                        case -2:
+                            console.log('失败', res.data.toast);
+                            break;
+                        default:
+                            console.log('其他', res.data.toast);
+                    }
+
+                    // TODO 登录成功后：保存cookie、重定向页面
+                    // 进入页面首先判断是否登录态，否则重定向至登录页，否则直接进入目标页面
+
+                }).catch(function (err) {
+                    console.log('login err:', err);
+                });
             }
         });
+
     };
 
     render() {

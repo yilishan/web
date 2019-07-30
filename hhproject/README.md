@@ -62,6 +62,10 @@
    2. [ ] 服务器获取验证
    3. [ ] 跳转页面
 
+## 2019-07-30
+1. npm i --save cookie-parser
+2. npm i --save body-parser
+3. 完成登录->后端->数据库->返回结果
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
