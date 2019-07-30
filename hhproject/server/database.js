@@ -54,8 +54,8 @@ exports.Update = function(){
 
 
 // 查, 传入空值，可以查询所有, findOne查找一条
-exports.dbFind = function(para){
-    return User.find(para, {username: 0, password: 0, __v: 0}, function(err, doc){
+exports.dbFind = function(selector={}, filter={username: 0, password: 0, __v: 0}){
+    return User.find(selector, filter, function(err, doc){
         if(!err){
             // console.log(doc);
         }else{
