@@ -1,12 +1,18 @@
 const express = require('express');
+const userRoute = require('./user');
 const app = express();
-const { dbConnect, dbFind } = require('./database.js');
+const { dbConnect } = require('./database.js');
 const { title, identity } = require('./data.js');
 const { login } = require('./login.js');
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // 连接mongodb,并且使用grandproject这个集合
 dbConnect();
+
+app.use(cookieParser());
+app.use('/user', userRoute);
+
 
 //bodyParser API
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,15 +31,14 @@ app.get('/identity', function (req, res) {
     res.json(identity);
 });
 
-app.get('/data', function (req, res) {
-    dbFind({},{__v: 0}).then(data => {
-        res.json(data);
-    });
-});
-
 app.post('/login', function (req, res) {
     // console.log("req.body:", req.body);
     login(req.body).then(data => {
+        // 登录成功，设置cookie
+        console.log('server data:',data);
+        if(data.code === 1){
+            res.cookie('userid', data.data[0]);
+        }
         res.json(data);
     });
 });

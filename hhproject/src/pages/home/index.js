@@ -6,6 +6,7 @@ import '../../global/config.js';
 import axios from 'axios';
 import NameShow from '../../components/nameShow/index.js';
 import MySteps from '../../components/mySteps/index.js';
+import AuthRoute from '../../components/authRoute/index.js';
 
 const curPage = 0;
 
@@ -44,6 +45,7 @@ class Home extends React.Component {
     render() {
         return (
             <div>
+                <AuthRoute />
                 <MySteps curPage={curPage} handleClick={this.handleClick} this={this} />
 
                 <Row type="flex" justify="center" className="row">

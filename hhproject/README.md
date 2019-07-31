@@ -59,13 +59,23 @@
 2. 完成登录页数据判空
 3. 登录页TODO
    1. [ ] md5加密
-   2. [ ] 服务器获取验证
-   3. [ ] 跳转页面
+   2. [x] 服务器获取验证
+   3. [x] 跳转页面
 
 ## 2019-07-30
 1. npm i --save cookie-parser
 2. npm i --save body-parser
 3. 完成登录->后端->数据库->返回结果
+
+## 2019-07-31
+1. app.use(cookieParser())要在app.use('/user', userRoute)前面，否则无法使用req.cookies获取到参数
+2. 添加登录后跳转至首页 | 登录态写入cookie 
+3. 注册页TODO
+   1. [ ] 新增用户数据
+   2. [ ] 用户数据判重提示
+   3. [ ] 跳转页面
+   4. [ ] 用户登录后注销登录操作
+
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

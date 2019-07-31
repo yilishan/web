@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dbUrl = 'mongodb://localhost:27017/grandproject';
 // mongo 有文档概念，类似于MySQL中的表
 // 定义文档模型，Schema和model新建模型
-const User = mongoose.model('user', new mongoose.Schema({
+exports.User = mongoose.model('user', new mongoose.Schema({
     username: {type: String, require: true},
     password: {type: String, require: true}
 }));
@@ -16,6 +16,7 @@ exports.dbConnect = function(){
     });
 };
 
+/* 
 // 增
 exports.dbCreate = function(){
     User.create({
@@ -29,7 +30,7 @@ exports.dbCreate = function(){
         }
     });
 };
-    
+
 // 删除
 exports.dbRemove = function(){
     User.remove({age: 3}, function(err, doc){
@@ -62,4 +63,5 @@ exports.dbFind = function(selector={}, filter={username: 0, password: 0, __v: 0}
             console.log(err);
         }
     });
-};
+}; 
+*/

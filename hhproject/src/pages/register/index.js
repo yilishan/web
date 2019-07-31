@@ -3,6 +3,7 @@ import { Input, Button, Form, Icon, Avatar } from 'antd';
 import './index.css'
 import '../../global/config.js'
 import img from '../../image/axin.jpg';
+import AuthRoute from '../../components/authRoute/index.js';
 // import axios from 'axios';
 
 class NormalRegisterForm extends React.Component {
@@ -30,6 +31,7 @@ class NormalRegisterForm extends React.Component {
         const { getFieldDecorator } = this.props.form;
         return (
             <div className="root">
+                <AuthRoute />
                 <Avatar size={100} src={img} className="avatar" />
                 <Form onSubmit={this.handleSubmit} className="register-form">
                     <Form.Item>
