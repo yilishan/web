@@ -12,12 +12,13 @@ class AuthRoute extends React.Component {
     }
 
     componentDidMount(){
+        console.log('AuthRoute componentDidMount');
         const me = this;
         const curPageList = ['/login', '/register'];
         const curPathNmae = me.props.location.pathname;
         // 是否是注册或登录页,若是，则不用操作
         if(curPageList.indexOf(curPathNmae) > -1){
-            // return null;
+            return null;
         }
         // 是否登录
         axios.get('/user/info').then(function (res) {

@@ -76,6 +76,13 @@
    3. [ ] 跳转页面
    4. [ ] 用户登录后注销登录操作
 
+## 2019-08-01
+1. 添加注销登录按钮
+2. npm i --save react-cookies
+3. 添加登录加载
+4. 添加登录错误提示
+5. app.use(bodyParser.json())要在app.use('/user', userRoute)前面，否则无法使用req.body获取到参数
+
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

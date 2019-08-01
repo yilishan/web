@@ -1,25 +1,87 @@
 import React from 'react';
-import { Input, Button, Form, Icon, Avatar } from 'antd';
+import { Input, Button, Form, Icon, Avatar, Alert, Spin } from 'antd';
 import './index.css'
 import '../../global/config.js'
 import img from '../../image/axin.jpg';
 import AuthRoute from '../../components/authRoute/index.js';
-// import axios from 'axios';
+import axios from 'axios';
 
 class NormalRegisterForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            isSpinning: false,
+            errText: '',
         }
     }
 
+    spinShow() {
+        this.setState({
+            isSpinning: true
+        });
+    }
+
+    spinHide() {
+        this.setState({
+            isSpinning: false
+        });
+    }
+
+    errShow(errText) {
+        const me = this;
+        me.setState({
+            errText: errText
+        });
+        setTimeout(() => {
+            me.setState({
+                errText: ''
+            });
+        }, 3000);
+    }
+
     handleSubmit = (e) => {
+        const me = this;
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                // TODO 比较两次密码是否相同
+                if (values.password !== values.repassword) {
+                    me.errShow('两次密码输入不一致');
+                }
+                me.spinShow();
+                axios.post('/user/register', {
+                    username: values.username,
+                    password: values.password
+                }).then(function (res) {
+                    me.spinHide();
+                    if (res.status === 200) {
+                        console.log('login res:', res);
+                        let myerrText =  res.data.toast;
+                        switch (res.data.code) {
+                            case 1:
+                                console.log('注册成功', res.data.toast);
+                                myerrText = '';
+                                me.props.history.push('/');
+                                break;
+                            case -1:
+                                console.log('参数错误', res.data.toast);
+                                break;
+                            case -2:
+                                console.log('数据库错误', res.data.toast);
+                                break;
+                            case -3:
+                                console.log('用户已存在', res.data.toast);
+                                break;
+                            default:
+                                console.log('其他', res.data.toast);
+                        }
+                        me.errShow(myerrText);
+                    }
+                }).catch(function (err) {
+                    me.spinHide();
+                    console.log('login err:', err);
+                });
+
                 // 若相同，传至后台
                 // 后台：注册成功、失败（重名、格式错误、数据库错误）
                 // 注册成功后直接跳转至登录态，保存cookie
@@ -33,46 +95,52 @@ class NormalRegisterForm extends React.Component {
             <div className="root">
                 <AuthRoute />
                 <Avatar size={100} src={img} className="avatar" />
-                <Form onSubmit={this.handleSubmit} className="register-form">
-                    <Form.Item>
-                        {getFieldDecorator('username', {
-                            rules: [{ required: true, message: '请输入用户名！' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                placeholder="用户名"
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('password', {
-                            rules: [{ required: true, message: '请输入密码！' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                type="password"
-                                placeholder="密码"
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        {getFieldDecorator('repassword', {
-                            rules: [{ required: true, message: '请确认密码！' }],
-                        })(
-                            <Input
-                                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                                type="password"
-                                placeholder="确认密码"
-                            />
-                        )}
-                    </Form.Item>
-                    <Form.Item>
-                        <a className="register-form-register" href="/login">返回登录</a>
-                        <Button type="primary" htmlType="submit" className="register-form-button">
-                            注册
+                <Spin spinning={this.state.isSpinning} >
+                    <Form onSubmit={this.handleSubmit} className="register-form">
+                        <Form.Item>
+                            {getFieldDecorator('username', {
+                                rules: [{ required: true, message: '请输入用户名！' }],
+                            })(
+                                <Input
+                                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                    placeholder="用户名"
+                                />
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            {getFieldDecorator('password', {
+                                rules: [{ required: true, message: '请输入密码！' }],
+                            })(
+                                <Input
+                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                    type="password"
+                                    placeholder="密码"
+                                />
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            {getFieldDecorator('repassword', {
+                                rules: [{ required: true, message: '请确认密码！' }],
+                            })(
+                                <Input
+                                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                                    type="password"
+                                    placeholder="确认密码"
+                                />
+                            )}
+                        </Form.Item>
+                        <Form.Item>
+                            <a className="register-form-register" href="/login">返回登录</a>
+                            <Button type="primary" htmlType="submit" className="register-form-button">
+                                注册
                         </Button>
-                    </Form.Item>
-                </Form>
+                            {(this.state.errText && this.state.errText !== '') ?
+                                <Alert message={this.state.errText} type="error" showIcon />
+                                : null
+                            }
+                        </Form.Item>
+                    </Form>
+                </Spin>
             </div>
         );
     }

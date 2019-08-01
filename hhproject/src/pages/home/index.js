@@ -7,6 +7,7 @@ import axios from 'axios';
 import NameShow from '../../components/nameShow/index.js';
 import MySteps from '../../components/mySteps/index.js';
 import AuthRoute from '../../components/authRoute/index.js';
+import Logout from '../../components/logout/index.js';
 
 const curPage = 0;
 
@@ -46,9 +47,10 @@ class Home extends React.Component {
         return (
             <div>
                 <AuthRoute />
+                <Logout location={this.location} this={this} />
                 <MySteps curPage={curPage} handleClick={this.handleClick} this={this} />
 
-                <Row type="flex" justify="center" className="row">
+                <Row type="flex" justify="center" className="home-row">
                     {
                         this.state.identity ?
                         this.state.identity.map((item, index) => {

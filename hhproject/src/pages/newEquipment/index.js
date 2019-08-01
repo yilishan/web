@@ -1,9 +1,10 @@
 import React from 'react';
-import { PageHeader  } from 'antd';
+import { PageHeader } from 'antd';
 import './index.css'
 import '../../global/config.js'
 // import axios from 'axios';
 import MySteps from '../../components/mySteps/index.js';
+import Logout from '../../components/logout/index.js';
 // import EquiSelector from '../../components/equiSelector/index.js';
 
 const curPage = 1;
@@ -46,6 +47,7 @@ class NewEquipment extends React.Component {
     render() {
         return (
             <div>
+                <Logout />
                 <MySteps curPage={curPage} />
                 {
                     this.state.name ?

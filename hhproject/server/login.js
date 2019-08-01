@@ -21,7 +21,7 @@ exports.login = async function (para) {
 const canLogin = async function (para) {
     // TODO 向数据库查询，若查到，则返回查询结果（用户id）
     let data;
-    await User.find(para, { username: 0, password: 0, __v: 0 }, function (err, doc) {
+    await User.find(para, { password: 0, __v: 0 }, function (err, doc) {
         if (!err) {
             console.log('doc', doc);
             data = doc;
