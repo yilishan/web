@@ -94,10 +94,6 @@ class NormalRegisterForm extends React.Component {
                     me.spinHide();
                     console.log('login err:', err);
                 });
-
-                // 若相同，传至后台
-                // 后台：注册成功、失败（重名、格式错误、数据库错误）
-                // 注册成功后直接跳转至登录态，保存cookie
             }
         });
     };

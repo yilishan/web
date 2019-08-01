@@ -47,7 +47,7 @@ class Home extends React.Component {
         return (
             <div>
                 <AuthRoute />
-                <Logout location={this.location} this={this} />
+                <Logout />
                 <MySteps curPage={curPage} handleClick={this.handleClick} this={this} />
 
                 <Row type="flex" justify="center" className="home-row">

@@ -50,7 +50,6 @@ class NormalLoginForm extends React.Component {
                 const md5Password = global.md5Pwd(values.password);
 
                 axios.post('/user/login', {
-                // axios.post('/login', {
                     username: values.username,
                     password: md5Password
                 }).then(function (res) {

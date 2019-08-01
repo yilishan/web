@@ -1,9 +1,8 @@
 const express = require('express');
 const userRoute = require('./user');
 const app = express();
-const { dbConnect, User } = require('./database.js');
+const { dbConnect } = require('./database.js');
 const { title, identity } = require('./data.js');
-const { login } = require('./login.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 

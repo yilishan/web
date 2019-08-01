@@ -5,7 +5,6 @@ const LOGIN_FAIL = 'LOGIN_FAIL';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 
 exports.login = async function (para) {
-    const { username, password } = para;
     if (!para.username || !para.password) {
         return {
             code: -1,

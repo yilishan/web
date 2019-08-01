@@ -14,10 +14,6 @@ class Logout extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount(){
-        
-    }
-
     handleClick(){
         cookie.remove('userid');
         cookie.remove('username');
