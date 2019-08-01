@@ -69,6 +69,7 @@ Route.post('/login', function (req, res) {
         if(data.code === 1){
             res.cookie('userid', data.data[0]._id);
             res.cookie('username', data.data[0].username);
+            res.cookie('identity', data.data[0].identity);
         }
         res.json(data);
     });
@@ -76,10 +77,10 @@ Route.post('/login', function (req, res) {
 
 // 注册
 Route.post('/register', function (req, res) {
-    const {username, password} = req.body;
-    console.log("req.body:", username, password);
+    const {username, password, identity} = req.body;
+    console.log("req.body:", req.body);
 
-    if (!username || !password) {
+    if (!username || !password || !identity) {
         return res.json({
             code: -1,
             msg: PARAMETER_ERROR,
@@ -106,13 +107,15 @@ Route.post('/register', function (req, res) {
                     User.create({
                         username: username,
                         password: password,
+                        identity: identity,
                     }, function(err, doc){
                         if(!err){
                             // 注册成功
                             console.log(doc);
-                            const {username, _id} = doc;
+                            const {username, _id, identity} = doc;
                             res.cookie('userid', _id);
                             res.cookie('username', username);
+                            res.cookie('identity', identity);
                             return res.json({
                                 code: 1,
                                 msg: REGISTER_SUCCESS,

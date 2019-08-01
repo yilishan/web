@@ -1,10 +1,12 @@
 import React from 'react';
-import { Input, Button, Form, Icon, Avatar, Alert, Spin } from 'antd';
+import { Input, Button, Form, Icon, Avatar, Alert, Spin, Select } from 'antd';
 import './index.css'
 import '../../global/config.js'
 import img from '../../image/axin.jpg';
 import AuthRoute from '../../components/authRoute/index.js';
 import axios from 'axios';
+
+const { Option } = Select;
 
 class NormalRegisterForm extends React.Component {
     constructor(props) {
@@ -12,7 +14,9 @@ class NormalRegisterForm extends React.Component {
         this.state = {
             isSpinning: false,
             errText: '',
+            identity: global.identity[0].name
         }
+        this.handleChange = this.handleChange.bind(this);
     }
 
     spinShow() {
@@ -39,6 +43,13 @@ class NormalRegisterForm extends React.Component {
         }, 3000);
     }
 
+    handleChange(value){
+        console.log(`selected ${value}`, this);
+        this.setState({
+            identity: value
+        });
+    }
+
     handleSubmit = (e) => {
         const me = this;
         e.preventDefault();
@@ -52,12 +63,13 @@ class NormalRegisterForm extends React.Component {
                 me.spinShow();
                 axios.post('/user/register', {
                     username: values.username,
-                    password: md5Password
+                    password: md5Password,
+                    identity: this.state.identity
                 }).then(function (res) {
                     me.spinHide();
                     if (res.status === 200) {
                         console.log('login res:', res);
-                        let myerrText =  res.data.toast;
+                        let myerrText = res.data.toast;
                         switch (res.data.code) {
                             case 1:
                                 console.log('注册成功', res.data.toast);
@@ -129,6 +141,15 @@ class NormalRegisterForm extends React.Component {
                                     placeholder="确认密码"
                                 />
                             )}
+                        </Form.Item>
+                        <Form.Item>
+                            <Select defaultValue={global.identity[0].name} onChange={this.handleChange}>
+                                {
+                                    global.identity.map((item) => {
+                                        return <Option key={item.id} value={item.name}>{item.name}</Option>
+                                    })
+                                }
+                            </Select>
                         </Form.Item>
                         <Form.Item>
                             <a className="register-form-register" href="/login">返回登录</a>

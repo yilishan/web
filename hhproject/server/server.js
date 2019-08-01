@@ -1,7 +1,7 @@
 const express = require('express');
 const userRoute = require('./user');
 const app = express();
-const { dbConnect } = require('./database.js');
+const { dbConnect, User } = require('./database.js');
 const { title, identity } = require('./data.js');
 const { login } = require('./login.js');
 const bodyParser = require('body-parser');
@@ -9,6 +9,11 @@ const cookieParser = require('cookie-parser');
 
 // 连接mongodb,并且使用grandproject这个集合
 dbConnect();
+
+// 清空数据库
+// User.remove({}, function(err, doc){
+//     console.log(doc);
+// });
 
 //bodyParser API
 app.use(bodyParser.urlencoded({ extended: false }));

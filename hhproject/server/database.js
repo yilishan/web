@@ -5,7 +5,8 @@ const dbUrl = 'mongodb://localhost:27017/grandproject';
 // 定义文档模型，Schema和model新建模型
 exports.User = mongoose.model('user', new mongoose.Schema({
     username: {type: String, require: true},
-    password: {type: String, require: true}
+    password: {type: String, require: true},
+    identity: {type: String, require: true},
 }));
 
 // 连接mongodb,并且使用grandproject这个集合
