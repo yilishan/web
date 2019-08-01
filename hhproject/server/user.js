@@ -66,7 +66,6 @@ Route.post('/login', function (req, res) {
     // console.log("req.body:", req.body);
     login(req.body).then(data => {
         // 登录成功，设置cookie
-        console.log('server data:',data.data[0]._id);
         if(data.code === 1){
             res.cookie('userid', data.data[0]._id);
             res.cookie('username', data.data[0].username);

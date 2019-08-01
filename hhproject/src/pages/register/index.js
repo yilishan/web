@@ -48,10 +48,11 @@ class NormalRegisterForm extends React.Component {
                 if (values.password !== values.repassword) {
                     me.errShow('两次密码输入不一致');
                 }
+                const md5Password = global.md5Pwd(values.password);
                 me.spinShow();
                 axios.post('/user/register', {
                     username: values.username,
-                    password: values.password
+                    password: md5Password
                 }).then(function (res) {
                     me.spinHide();
                     if (res.status === 200) {

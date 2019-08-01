@@ -7,11 +7,6 @@ import img from '../../image/axin.jpg';
 import axios from 'axios';
 import AuthRoute from '../../components/authRoute/index.js';
 
-// TODO md5加密
-// TODO 服务器获取验证
-// TODO 跳转页面
-
-
 class NormalLoginForm extends React.Component {
     constructor(props) {
         super(props);
@@ -52,11 +47,12 @@ class NormalLoginForm extends React.Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const md5Password = global.md5Pwd(values.password);
 
                 axios.post('/user/login', {
                 // axios.post('/login', {
                     username: values.username,
-                    password: values.password
+                    password: md5Password
                 }).then(function (res) {
                     me.spinHide();
                     if (res.status === 200) {
