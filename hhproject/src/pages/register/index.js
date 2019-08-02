@@ -53,7 +53,7 @@ class NormalRegisterForm extends React.Component {
     handleSubmit = (e) => {
         const me = this;
         e.preventDefault();
-        this.props.form.validateFields((err, values) => {
+        me.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
                 if (values.password !== values.repassword) {

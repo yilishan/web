@@ -87,6 +87,11 @@
 8. 数据库清空旧数据
 9. 添加注册时用户身份选择
 
+## 2019-08-02
+1. 修改步骤
+2. npm install moment --save, 处理日期格式的库
+3. 配置委托单字段对照表 | 新增新建产品页
+
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

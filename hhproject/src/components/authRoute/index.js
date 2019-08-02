@@ -26,7 +26,7 @@ class AuthRoute extends React.Component {
                 console.log('/user/info res:', res);
                 if(res.data.code === 1){
                     // 登录成功
-                    me.props.history.push('/');
+                    // me.props.history.push('/');
                 }else{
                     // 登录失败,跳转至登录页
                     // console.log('this.props.history:', me.props.history);
