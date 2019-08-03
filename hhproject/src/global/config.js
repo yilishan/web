@@ -1,4 +1,15 @@
 import md5 from 'md5';
+import cookie from 'react-cookies';
+
+global.user = {
+    name: cookie.load("username") || "",
+    id: cookie.load("userid") || "",
+    identity: cookie.load("identity") || "",
+}
+
+global.product = {
+
+}
 
 global.title = [
     { "name": "产品列表", "path": "/" },
@@ -26,7 +37,7 @@ global.md5Pwd = function(pwd) {
 // 委托单字段对照表
 global.attorneyWordList = [
 { "desc": "日期", "name": "date", "isBasic": true, "canSelect":false, },
-{ "desc": "版次", "name": "version", "isBasic": true, "canSelect":false, },
+{ "desc": "版次", "name": "version", "isBasic": true, "canSelect":false, "defaultValue":"1",},
 { "desc": "合同号", "name": "contractNo", "isBasic": true, "canSelect":false, },
 { "desc": "委托单编号", "name": "attorneyNo", "isBasic": true, "canSelect":false, },
 { "desc": "委托单位", "name": "attorneyDepartment", "isBasic": true, "canSelect":false, },
@@ -34,14 +45,14 @@ global.attorneyWordList = [
 { "desc": "委托日期", "name": "attorneyDate", "isBasic": true, "canSelect":false, },
 { "desc": "产品名称", "name": "productName", "isBasic": true, "canSelect":false, },
 { "desc": "产品编号", "name": "productNo", "isBasic": true, "canSelect":false, },
-{ "desc": "检测标准", "name": "detectionStandard", "isBasic": true, "canSelect":false, },
+{ "desc": "检测方法", "name": "detectionMethod", "isBasic": true, "canSelect":true, "selectList":["射线检测","超声波检测","焊后检测","渗透检测","TOFD检测",], },
+{ "desc": "检测时机", "name": "detectionWindow", "isBasic": true, "canSelect":true, "selectList":["焊后", "焊后24h", "焊后36h", "焊后48h", "热处理后", "水压试验后", "机加工后", "坡口加工前", "坡口加工后", "毛坯", "堆焊后", "打磨后", "清根后", "缺陷去除后", "校形后", "表修后", "与上部支柱组焊前",]},
 { "desc": "检测比例", "name": "detectionRatio", "isBasic": true, "canSelect":true, "selectList":["10%", "20%", "25%", "40%", "50%", "100%",]},
+{ "desc": "检测标准", "name": "detectionStandard", "isBasic": true, "canSelect":false, },
 { "desc": "合格级别", "name": "qualifiedLevel", "isBasic": true, "canSelect":true, "selectList":["Ⅰ", "Ⅱ", "Ⅲ",]},
 { "desc": "技术等级", "name": "techLevel", "isBasic": true, "canSelect":true, "selectList":["A", "AB", "B", "C"]},
 { "desc": "表面状态", "name": "surfaceState", "isBasic": true, "canSelect":true, "selectList":["焊态", "打磨", "机加工", "喷砂面", "轧制面", "毛坯",]},
-{ "desc": "检测时机", "name": "detectionWindow", "isBasic": true, "canSelect":true, "selectList":["焊后", "焊后24h", "焊后36h", "焊后48h", "热处理后", "水压试验后", "机加工后", "坡口加工前", "坡口加工后", "毛坯", "堆焊后", "打磨后", "清根后", "缺陷去除后", "校形后", "表修后", "与上部支柱组焊前",]},
 { "desc": "热处理状态", "name": "heatTreatmentState", "isBasic": true, "canSelect":true, "selectList":["/", "热处理前", "热处理后", "正火",]},
-{ "desc": "检测方法", "name": "detectionMethod", "isBasic": true, "canSelect":true, "selectList":["射线检测","超声波检测","焊后检测","渗透检测","TOFD检测",], },
 { "desc": "委托说明", "name": "attorneyItem", "isBasic": false, "canSelect":false, },
 { "desc": "工件表面检查结果", "name": "surfaceConclusion", "isBasic": false, "canSelect":false, },
 { "desc": "检测示意图", "name": "detectionImage", "isBasic": false, "canSelect":false, },

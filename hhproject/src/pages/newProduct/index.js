@@ -48,7 +48,13 @@ class NewProduct extends React.Component {
                 </Select>
             );
         } else {
-            return (<Input placeholder={item.desc}></Input>);
+            if(item.name === "attorneyPeople"){
+                item.defaultValue = global.user.name;
+            }
+            return (<Input 
+                placeholder={item.desc} 
+                defaultValue={item.defaultValue}
+                ></Input>);
         }
     }
 
