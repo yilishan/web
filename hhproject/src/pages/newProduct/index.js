@@ -1,10 +1,8 @@
 import React from 'react';
-import { Input, DatePicker, Select } from 'antd';
-import locale from 'antd/lib/date-picker/locale/zh_CN';
+import { Input, Select } from 'antd';
 import 'moment/locale/zh-cn';
 import './index.css'
 import '../../global/config.js'
-import moment from 'moment';
 // import axios from 'axios';
 import PublicHeader from '../../components/publicHeader/index.js';
 
@@ -15,6 +13,7 @@ class NewProduct extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+           
         }
     }
 
@@ -23,15 +22,14 @@ class NewProduct extends React.Component {
     }
 
     getComponent(item) {
-        if (item.name === "date" || item.name === "attorneyDate") {
-            return (<DatePicker placeholder="选择日期" defaultValue={moment('2015.01.01', 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
-        } else if (item.canSelect) {
+        if (item.canSelect) {
             return (
                 <Select
                     showSearch
-                    style={{ width: 200 }}
+                    className = "newproduct-form-component"
                     placeholder="请选择"
                     optionFilterProp="children"
+                    defaultValue={item.defaultValue}
                     // onChange={onChange}
                     // onFocus={onFocus}
                     // onBlur={onBlur}
@@ -48,13 +46,11 @@ class NewProduct extends React.Component {
                 </Select>
             );
         } else {
-            if(item.name === "attorneyPeople"){
-                item.defaultValue = global.user.name;
-            }
-            return (<Input 
-                placeholder={item.desc} 
+            return (<Input
+                className = "newproduct-form-component"
+                placeholder={item.desc}
                 defaultValue={item.defaultValue}
-                ></Input>);
+            ></Input>);
         }
     }
 
@@ -66,7 +62,7 @@ class NewProduct extends React.Component {
                 <div className="newproduct-root">
                     <div className="newproduct-form">
                         {
-                            global.attorneyWordList.filter((item) => item.isBasic === true).map((item, index) => {
+                            global.productWordList.map((item, index) => {
                                 return (
                                     <div key={index} className="newproduct-form-item">
                                         <div className="newproduct-form-title">{item.desc}</div>

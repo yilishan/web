@@ -1,6 +1,6 @@
 .newproduct-root {
-    width: 100%;
-    padding: 20px;
+    width: 1000px;
+    margin: 0 auto;
     /* background-color: hotpink; */
 }
 
@@ -32,10 +32,14 @@
 }
 
 .newproduct-form-input {
-    flex: 2;
+    flex: 3;
     max-width: 20em;
     height: 100%;
     padding-left: 1em;
     /* background-color: darkcyan; */
 
+}
+
+.newproduct-form-component{
+    width: 100%;
 }

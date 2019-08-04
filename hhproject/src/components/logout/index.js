@@ -10,6 +10,7 @@ class Logout extends React.Component{
         this.state = { 
             username: cookie.load('username'),
             identity: cookie.load('identity'),
+            department: cookie.load('department'),
         };
         this.handleClick = this.handleClick.bind(this);
     }
@@ -18,13 +19,14 @@ class Logout extends React.Component{
         cookie.remove('userid');
         cookie.remove('username');
         cookie.remove('identity');
+        cookie.remove('department');
         this.props.history.push('/login');
     }
 
     render() {
         return (
             <div className="logout-root">
-                <Button className="logout-btn" onClick={this.handleClick}>{this.state.identity} {this.state.username} | 退出登录</Button>
+                <Button className="logout-btn" onClick={this.handleClick}>{this.state.department} | {this.state.identity} : {this.state.username} | 退出登录</Button>
             </div>
         );
     }

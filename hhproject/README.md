@@ -93,7 +93,8 @@
 3. 配置委托单字段对照表 | 新增新建产品页
 
 ## 2019-08-03
-1. 
+1. 注册添加部门选择
+2. 分离添加产品和编辑委托信息
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -14,9 +14,11 @@ class NormalRegisterForm extends React.Component {
         this.state = {
             isSpinning: false,
             errText: '',
-            identity: global.identity[0].name
+            identity: global.identity[0].name,
+            department: global.department[0].name,
         }
-        this.handleChange = this.handleChange.bind(this);
+        this.identityChange = this.identityChange.bind(this);
+        this.departmentChange = this.departmentChange.bind(this);
     }
 
     spinShow() {
@@ -43,10 +45,17 @@ class NormalRegisterForm extends React.Component {
         }, 3000);
     }
 
-    handleChange(value){
+    identityChange(value){
         console.log(`selected ${value}`, this);
         this.setState({
             identity: value
+        });
+    }
+   
+    departmentChange(value){
+        console.log(`selected ${value}`, this);
+        this.setState({
+            department: value
         });
     }
 
@@ -64,7 +73,8 @@ class NormalRegisterForm extends React.Component {
                 axios.post('/user/register', {
                     username: values.username,
                     password: md5Password,
-                    identity: this.state.identity
+                    identity: this.state.identity,
+                    department: this.state.department,
                 }).then(function (res) {
                     me.spinHide();
                     if (res.status === 200) {
@@ -139,10 +149,19 @@ class NormalRegisterForm extends React.Component {
                             )}
                         </Form.Item>
                         <Form.Item>
-                            <Select defaultValue={global.identity[0].name} onChange={this.handleChange}>
+                            <Select onChange={this.identityChange} defaultValue={global.identity[0].name}>
                                 {
                                     global.identity.map((item) => {
                                         return <Option key={item.id} value={item.name}>{item.name}</Option>
+                                    })
+                                }
+                            </Select>
+                        </Form.Item>
+                        <Form.Item>
+                            <Select onChange={this.departmentChange} defaultValue={global.department[0].name}>
+                                {
+                                    global.department.map((item) => {
+                                        return <Option key={item.code} value={item.name}>[{item.code}]{item.name}</Option>
                                     })
                                 }
                             </Select>

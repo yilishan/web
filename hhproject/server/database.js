@@ -7,6 +7,7 @@ exports.User = mongoose.model('user', new mongoose.Schema({
     username: {type: String, require: true},
     password: {type: String, require: true},
     identity: {type: String, require: true},
+    department: {type: String, require: true},
 }));
 
 // 连接mongodb,并且使用grandproject这个集合
