@@ -9,11 +9,11 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
+    /* background-color: pink; */
 }
 
 .newproduct-form-item {
-    /* background-color: pink; */
     width: 33.33%;
     padding: 0 1em;
     margin: 10px 0;
@@ -28,6 +28,7 @@
     text-align: right;
     max-width: 10em;
     height: 100%;
+    margin-bottom: 24px;
     /* background-color: aquamarine; */
 }
 
@@ -42,4 +43,8 @@
 
 .newproduct-form-component{
     width: 100%;
+}
+
+.newproduct-form-button {
+    width: 200px;
 }

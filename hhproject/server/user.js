@@ -28,7 +28,7 @@ Route.get('/info', function(req, res){
     }
     User.findOne({_id:userid}, {password:0, __v:0}, function(err, doc){
         if(!err){
-            console.log('/info find',doc);
+            // console.log('/info find',doc);
             return res.json({
                 code: 1,
                 msg: LOGIN_SUCCESS,
@@ -114,7 +114,8 @@ Route.post('/register', function (req, res) {
                         if(!err){
                             // 注册成功
                             console.log(doc);
-                            const {username, _id, identity} = doc;
+                            const {timestamp, username, _id, identity, department} = doc;
+                            res.cookie('timestamp', timestamp);
                             res.cookie('userid', _id);
                             res.cookie('username', username);
                             res.cookie('identity', identity);

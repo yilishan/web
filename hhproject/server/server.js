@@ -1,7 +1,8 @@
 const express = require('express');
-const userRoute = require('./user');
-const app = express();
 const { dbConnect } = require('./database.js');
+const userRoute = require('./user');
+const productRoute = require('./product');
+const app = express();
 const { title, identity } = require('./data.js');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -13,13 +14,18 @@ dbConnect();
 // User.remove({}, function(err, doc){
 //     console.log(doc);
 // });
+// Product.remove({}, function(err, doc){
+//     console.log(doc);
+// });
 
 //bodyParser API
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use(cookieParser());
+
 app.use('/user', userRoute);
+app.use('/product', productRoute);
 
 // 路由
 app.get('/', function (req, res) {
