@@ -32,6 +32,17 @@ class Home extends React.Component {
         // console.log('this.props.location.state:', this.props.location.state);
     }
 
+    handleClick(index) {
+        console.log("点击了：", index);
+        const data = this.state.productList[index];
+        this.props.history.push({
+            pathname: "/basicInfo",
+            state: {
+                data: data
+            },
+        });
+    }
+
     render() {
         return (
             <div>
@@ -41,7 +52,7 @@ class Home extends React.Component {
                 <div>
                     {
                         this.state.productList.map((item, index) =>
-                            <div key={index}>{item.contractNo}-{item.productName}-{item.productNo}-{item.timestamp}-{item._id}-{item.username}-{item.userid}-{item.identity}-{item.department}</div>
+                            <div key={index} onClick={this.handleClick.bind(this, index)}>{item.contractNo}-{item.productName}-{item.productNo}-{item.timestamp}-{item._id}-{item.username}-{item.userid}-{item.identity}-{item.department}</div>
                         )
                     }
                 </div>

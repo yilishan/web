@@ -10,26 +10,75 @@ import PublicHeader from '../../components/publicHeader/index.js';
 
 const curPage = 2;
 const { Option } = Select;
+let attorneyObj = {};
 
 class BasicInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            attorneyObj: {},
+            productData: null,
         }
     }
 
-    componentDidMount() {
+    componentWillMount() {
+        const me = this;
         document.title = global.title[curPage].name;
+
+        if (this.props.history.location.state.data) {
+            console.log("收到参数:", this.props.history.location.state.data);
+            me.setState({
+                productData: this.props.history.location.state.data,
+            });
+        }
+    }
+
+    getDefaultValue(name) {
+        let res;
+        switch (name) {
+            case 'date':
+                res = '2017.01.01';
+                break;
+            case 'attorneyDate':
+                res = '2017.01.01';
+                break;
+            case 'attorneyDepartment':
+                res = global.user.department;
+                break;
+            case 'attorneyPeople':
+                res = global.user.name;
+                break;
+            case 'attorneyNo':
+                const { productNo, attorneyList } = this.state.productData;
+                res = `C-${productNo}-${attorneyList.length + 1}`;
+                break;
+            default:
+                res = null;
+
+        }
+        if (res) {
+            attorneyObj[name] = res;
+            console.log('attorneyObj', attorneyObj);
+        }
+        console.log('获取默认值', name, res);
+        return res;
+    }
+
+    handleChange(name, value) {
+        console.log('选择了：', name, value);
+        let myProductData = this.state.productData;
+        attorneyObj[name] = value;
+        myProductData.attorneyList[0] = attorneyObj;
+        console.log('attorneyObj:', attorneyObj);
+        this.setState({
+            productData: myProductData
+        })
     }
 
     getComponent(item) {
         if (item.name === "date" || item.name === "attorneyDate") {
-            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" defaultValue={moment('2015.01.01', 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
+            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" defaultValue={moment(this.getDefaultValue(item.name), 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
         } else if (item.canSelect) {
-            if (item.name === "attorneyDepartment") {
-                item.defaultValue = global.user.department;
-            }
             return (
                 <Select
                     showSearch
@@ -37,8 +86,8 @@ class BasicInfo extends React.Component {
                     className="basicinfo-form-component"
                     placeholder="请选择"
                     optionFilterProp="children"
-                    defaultValue={item.defaultValue}
-                    // onChange={onChange}
+                    defaultValue={this.getDefaultValue(item.name)}
+                    onChange={this.handleChange.bind(this, item.name)}
                     // onFocus={onFocus}
                     // onBlur={onBlur}
                     // onSearch={onSearch}
@@ -54,13 +103,10 @@ class BasicInfo extends React.Component {
                 </Select>
             );
         } else {
-            if (item.name === "attorneyPeople") {
-                item.defaultValue = global.user.name;
-            }
             return (<Input
                 className="basicinfo-form-component"
                 placeholder={item.desc}
-                defaultValue={item.defaultValue}
+                defaultValue={this.getDefaultValue(item.name)}
             ></Input>);
         }
     }
@@ -69,6 +115,17 @@ class BasicInfo extends React.Component {
         return (
             <div>
                 <PublicHeader curPage={curPage} />
+
+                <div>
+                    产品基本信息：{
+                        Object.keys(this.state.productData).map(key => <div key={key}>{key} : {this.state.productData[key]}</div>)
+                    }
+                    {/* {
+                        this.state.productData.map((value, index)=>{
+                            return <div>{value}{index}</div>
+                        })
+                    } */}
+                </div>
 
                 <div className="basicinfo-root">
                     <div className="basicinfo-form">

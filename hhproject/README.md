@@ -97,6 +97,10 @@
 2. 分离添加产品和编辑委托信息
 3. 完善新建产品展示和数据库 | 产品列表初步展示
 
+## 2019-08-05
+1. 遍历数组：Object.keys(obj).map(key => console.log(obj[key]));
+2. 编辑委托信息修改中...
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
