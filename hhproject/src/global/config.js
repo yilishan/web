@@ -1,12 +1,14 @@
 import md5 from 'md5';
 import cookie from 'react-cookies';
 
-global.user = {
-    name: cookie.load("username") || "",
-    id: cookie.load("userid") || "",
-    identity: cookie.load("identity") || "",
-    department: cookie.load("department") || "",
-}
+global.user = function getUser(){
+    return {
+        name: cookie.load("username") || "",
+        id: cookie.load("userid") || "",
+        identity: cookie.load("identity") || "",
+        department: cookie.load("department") || "",
+    }
+};
 
 global.product = {
 

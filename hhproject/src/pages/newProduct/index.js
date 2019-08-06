@@ -55,10 +55,10 @@ class NormalNewProduct extends React.Component {
 
                 me.spinShow();
                 axios.post('/product/create', {
-                    userid: global.user.id,
-                    username: global.user.name,
-                    identity: global.user.identity,
-                    department: global.user.department,
+                    userid: global.user().id,
+                    username: global.user().name,
+                    identity: global.user().identity,
+                    department: global.user().department,
                     productName: values.productName,
                     productNo: values.productNo,
                     contractNo: values.contractNo,

@@ -101,6 +101,11 @@
 1. 遍历数组：Object.keys(obj).map(key => console.log(obj[key]));
 2. 编辑委托信息修改中...
 
+## 2019-08-06
+1. antd中defaultValue在每次组件变化后都会重新计算
+2. 设置默认日期：moment().format('YY.MM.DD')
+3. 编辑委托信息修改中2...
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

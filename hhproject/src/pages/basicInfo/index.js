@@ -10,7 +10,6 @@ import PublicHeader from '../../components/publicHeader/index.js';
 
 const curPage = 2;
 const { Option } = Select;
-let attorneyObj = {};
 
 class BasicInfo extends React.Component {
     constructor(props) {
@@ -25,59 +24,87 @@ class BasicInfo extends React.Component {
         const me = this;
         document.title = global.title[curPage].name;
 
+        // 初始化委托日期
+        let myAttorneyObj = this.state.attorneyObj;
+        myAttorneyObj['attorneyDate'] = moment().format('YY.MM.DD');
+        this.setState({
+            attorneyObj: myAttorneyObj
+        });
+
         if (this.props.history.location.state.data) {
             console.log("收到参数:", this.props.history.location.state.data);
             me.setState({
                 productData: this.props.history.location.state.data,
             });
         }
+
+    }
+
+    componentDidMount() {
+        this.initData();
+    }
+
+    initData() {
+        global.attorneyWordList.filter((item) => item.part === 'attorneyTitle').map((item) => {
+            let myAttorneyObj = this.state.attorneyObj;
+            console.log('myAttorneyObj:', myAttorneyObj);
+            myAttorneyObj[item.name] = this.getDefaultValue(item.name);
+            this.setState({
+                attorneyObj: myAttorneyObj
+            });
+        })
     }
 
     getDefaultValue(name) {
         let res;
         switch (name) {
-            case 'date':
-                res = '2017.01.01';
-                break;
-            case 'attorneyDate':
-                res = '2017.01.01';
-                break;
             case 'attorneyDepartment':
-                res = global.user.department;
+                res = global.user().department;
                 break;
             case 'attorneyPeople':
-                res = global.user.name;
+                res = global.user().name;
                 break;
             case 'attorneyNo':
-                const { productNo, attorneyList } = this.state.productData;
-                res = `C-${productNo}-${attorneyList.length + 1}`;
+                if (this.state.productData) {
+                    const { productNo, attorneyList } = this.state.productData;
+                    if (productNo && attorneyList) {
+                        res = `C-${productNo}-${attorneyList.length + 1}`;
+                    }
+                }
                 break;
             default:
                 res = null;
 
         }
-        if (res) {
-            attorneyObj[name] = res;
-            console.log('attorneyObj', attorneyObj);
-        }
-        console.log('获取默认值', name, res);
+        // console.log('获取默认值', name, res);
         return res;
     }
 
     handleChange(name, value) {
         console.log('选择了：', name, value);
+        this.setStateData(name, value);
+    }
+
+    handleInputChange(name, e) {
+        console.log('输入了:', name, e.target.value);
+        this.setStateData(name, e.target.value);
+    }
+
+    setStateData(key, value) {
         let myProductData = this.state.productData;
-        attorneyObj[name] = value;
-        myProductData.attorneyList[0] = attorneyObj;
-        console.log('attorneyObj:', attorneyObj);
+        let myAttorneyObj = this.state.attorneyObj;
+        myAttorneyObj[key] = value;
+        myProductData.attorneyList[0] = myAttorneyObj;
         this.setState({
+            attorneyObj: myAttorneyObj,
             productData: myProductData
-        })
+        });
+        console.log('myAttorneyObj:', myAttorneyObj);
     }
 
     getComponent(item) {
         if (item.name === "date" || item.name === "attorneyDate") {
-            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" defaultValue={moment(this.getDefaultValue(item.name), 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
+            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" defaultValue={moment(this.state.attorneyObj[item.name], 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
         } else if (item.canSelect) {
             return (
                 <Select
@@ -86,7 +113,7 @@ class BasicInfo extends React.Component {
                     className="basicinfo-form-component"
                     placeholder="请选择"
                     optionFilterProp="children"
-                    defaultValue={this.getDefaultValue(item.name)}
+                    value={this.state.attorneyObj[item.name]}
                     onChange={this.handleChange.bind(this, item.name)}
                     // onFocus={onFocus}
                     // onBlur={onBlur}
@@ -106,7 +133,8 @@ class BasicInfo extends React.Component {
             return (<Input
                 className="basicinfo-form-component"
                 placeholder={item.desc}
-                defaultValue={this.getDefaultValue(item.name)}
+                value={this.state.attorneyObj[item.name]}
+                onChange={this.handleInputChange.bind(this, item.name)}
             ></Input>);
         }
     }
