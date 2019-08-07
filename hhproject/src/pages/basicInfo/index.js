@@ -15,8 +15,9 @@ class BasicInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            attorneyObj: {},
-            productData: null,
+            attorneyObj: {}, //基本信息
+            attorneyItem: [], //委托说明
+            productData: null, //产品完整数据
         }
     }
 
@@ -26,7 +27,7 @@ class BasicInfo extends React.Component {
 
         // 初始化委托日期
         let myAttorneyObj = this.state.attorneyObj;
-        myAttorneyObj['attorneyDate'] = moment().format('YY.MM.DD');
+        myAttorneyObj['attorneyDate'] = moment().format('YYYY.MM.DD');
         this.setState({
             attorneyObj: myAttorneyObj
         });
@@ -52,12 +53,16 @@ class BasicInfo extends React.Component {
             this.setState({
                 attorneyObj: myAttorneyObj
             });
+            return null;
         })
     }
 
     getDefaultValue(name) {
         let res;
         switch (name) {
+            case 'attorneyDate':
+                res = moment().format('YYYY.MM.DD');
+                break;
             case 'attorneyDepartment':
                 res = global.user().department;
                 break;
@@ -90,6 +95,11 @@ class BasicInfo extends React.Component {
         this.setStateData(name, e.target.value);
     }
 
+    handleDateChange(name, momentObj) {
+        console.log('输入了:', name, momentObj.format('YYYY.MM.DD'));
+        this.setStateData(name, momentObj.format('YYYY.MM.DD'));
+    }
+
     setStateData(key, value) {
         let myProductData = this.state.productData;
         let myAttorneyObj = this.state.attorneyObj;
@@ -99,12 +109,12 @@ class BasicInfo extends React.Component {
             attorneyObj: myAttorneyObj,
             productData: myProductData
         });
-        console.log('myAttorneyObj:', myAttorneyObj);
+        console.log('productData:', this.state.productData);
     }
 
     getComponent(item) {
         if (item.name === "date" || item.name === "attorneyDate") {
-            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" defaultValue={moment(this.state.attorneyObj[item.name], 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
+            return (<DatePicker className="basicinfo-form-component" placeholder="选择日期" onChange={this.handleDateChange.bind(this, item.name)} defaultValue={moment(this.state.attorneyObj[item.name], 'YYYY.MM.DD')} format={'YYYY.MM.DD'} locale={locale} />);
         } else if (item.canSelect) {
             return (
                 <Select
@@ -155,18 +165,42 @@ class BasicInfo extends React.Component {
                     } */}
                 </div>
 
+                {/* 基础信息 */}
                 <div className="basicinfo-root">
                     <div className="basicinfo-form">
                         {
                             global.attorneyWordList.filter((item) => item.part === 'attorneyTitle').map((item, index) => {
                                 return (
                                     <div key={index} className="basicinfo-form-item">
-                                        <div className="basicinfo-form-title">{item.desc}</div>
+                                        <div className={this.state.attorneyObj[item.name] ? "basicinfo-form-title" : "basicinfo-form-title red"}>{item.desc}</div>
                                         <div className="basicinfo-form-input">{this.getComponent(item)}</div>
                                     </div>
                                 )
                             })
                         }
+                    </div>
+
+                    {/* 委托说明 */}
+                    <div className="basicinfo-attorneyItem">
+                        <h1>委托说明：</h1>
+                        <div className="basicinfo-attorneyItem-wrap">
+                            {
+                                global.attorneyItem.map((item, index) => {
+                                    return (
+                                        <div key={index} className="basicinfo-attorneyItem-item" style={{ flex: item.flex }}>
+                                            <div className="basicinfo-attorneyItem-title">{item.desc}</div>
+                                            <div className="basicinfo-attorneyItem-info">已有信息</div>
+                                            <div className="basicinfo-attorneyItem-input">输入</div>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+
+                    {/* 其他 */}
+                    <div className="basicinfo-other">
+                        <h1>检测示意图：</h1>
                     </div>
                 </div>
             </div>

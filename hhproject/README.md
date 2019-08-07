@@ -106,6 +106,9 @@
 2. 设置默认日期：moment().format('YY.MM.DD')
 3. 编辑委托信息修改中2...
 
+## 2019-08-07
+1. 添加委托说明样式
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

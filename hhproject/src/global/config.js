@@ -85,3 +85,15 @@ global.attorneyWordList = [
     { "desc": "当前页码", "name": "curPage", "part": "unShow", "canSelect": false, },
     { "desc": "总页码", "name": "totalPage", "part": "unShow", "canSelect": false, },
 ];
+
+// 委托说明
+global.attorneyItem = [
+    {"desc": "部件名称（开孔编号）", "name": "partName", "flex": 1.5},
+    {"desc": "焊缝编号", "name": "weldingLineNo", "flex": 1},
+    {"desc": "材质", "name": "material", "flex": 3},
+    {"desc": "规格（mm）", "name": "size", "flex": 3},
+    {"desc": "焊接方法", "name": "weldType", "flex": 1},
+    {"desc": "坡口形式", "name": "grooveType", "flex": 1},
+    {"desc": "焊工代号", "name": "welderNo", "flex": 1},
+    {"desc": "备注", "name": "comment", "flex": 1},
+];
