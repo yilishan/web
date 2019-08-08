@@ -87,7 +87,7 @@ global.attorneyWordList = [
 ];
 
 // 委托说明
-global.attorneyItem = [
+global.attorneyItemList = [
     {"desc": "部件名称（开孔编号）", "name": "partName", "flex": 1.5},
     {"desc": "焊缝编号", "name": "weldingLineNo", "flex": 1},
     {"desc": "材质", "name": "material", "flex": 3},

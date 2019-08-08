@@ -52,6 +52,7 @@
 .basicinfo-attorneyItem{
     margin-top: 50px;
     width: 100%;
+    text-align: center;
 }
 
 .basicinfo-attorneyItem-wrap{
@@ -59,8 +60,8 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-top: 1px solid #999;
-    border-left: 1px solid #999;
+    border-top: 1px solid #efefef;
+    border-left: 1px solid #efefef;
 }
 
 .basicinfo-attorneyItem-item{
@@ -70,8 +71,9 @@
 
 .basicinfo-attorneyItem-title{
     height: 50px;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #999;
+    font-weight: bold;
+    border-bottom: 1px solid #efefef;
+    border-right: 1px solid #efefef;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,20 +81,34 @@
 
 .basicinfo-attorneyItem-info{
     height: 50px;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #999;
+    color: #999;
+    background: #efefef;
+    border-bottom: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.basicinfo-attorneyItem-input-wrap{
+    height: 50px;
+    padding: 1px;
+    border-bottom: 1px solid #efefef;
+    border-right: 1px solid #efefef;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .basicinfo-attorneyItem-input{
-    height: 50px;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #999;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 0;
+}
+
+.basicinfo-attorneyItem-btn{
+    margin: 20px 0;
 }
 
 .basicinfo-other{

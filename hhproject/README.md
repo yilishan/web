@@ -109,6 +109,12 @@
 ## 2019-08-07
 1. 添加委托说明样式
 
+## 2019-08-08
+1. 如何判断空对象：https://blog.csdn.net/qq_38627581/article/details/77353015
+2. 如何判断字符串是否全为空格：使用trim()函数，可移除字符串前面和后面的空格
+3. TODO: 委托说明中，校验某些不能有空值的字段，并反馈校验结果
+4. 目前bug位置：basicinfo：244-248行，121-122行
+
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
