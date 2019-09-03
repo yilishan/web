@@ -118,6 +118,11 @@
 
 ## 2019-09-04
 1. 上述bug已修复，面对本页数据比较复杂的特点，考虑使用redux、lodash.get
+2. 后续：
+   1. 数据判空
+   2. 引入lodash.get
+   3. 上传图片模块
+   4. 生成委托单
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
