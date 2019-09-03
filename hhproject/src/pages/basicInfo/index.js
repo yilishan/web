@@ -16,11 +16,9 @@ class BasicInfo extends React.Component {
         super(props);
         this.state = {
             attorneyObj: {
-                attorneyList: [
-                    { 'attorneyItem': [] },
-                ],
+                attorneyExplainList: [],
             }, //基本信息
-            attorneyItem: {}, //新增委托说明，点击确认增加后，把attorneyItem数据添加到productData中，并将attorneyItem清空
+            attorneyExplainItem: {}, //新增委托说明，点击确认增加后，把attorneyExplainItem数据添加到productData中，并将attorneyExplainItem清空
             productData: null, //产品完整数据
         }
         this.handleAttorneyItemBtn = this.handleAttorneyItemBtn.bind(this);
@@ -40,7 +38,8 @@ class BasicInfo extends React.Component {
         if (this.props.history.location.state.data) {
             console.log("收到参数:", this.props.history.location.state.data);
             if (this.props.history.location.state.data.attorneyList.length === 0) {
-                this.props.history.location.state.data.attorneyList.push({ 'attorneyItem': [] });
+                const attorneyExplainList = [];
+                this.props.history.location.state.data.attorneyList.push({'attorneyExplainList':attorneyExplainList});
                 console.log("收到参数,添加属性:", this.props.history.location.state.data);
             }
             me.setState({
@@ -111,22 +110,22 @@ class BasicInfo extends React.Component {
 
     handleAttorneyItemBtn() {
         console.log("点击确认增加");
-        let myAttorneyItem = this.state.attorneyItem;
+        let myAttorneyExplainItem = this.state.attorneyExplainItem;
         // let myProductData = this.state.productData;
         let myAttorneyObj = this.state.attorneyObj;
         console.log("myAttorneyObj:", myAttorneyObj);
-        if (Object.keys(myAttorneyItem).length !== 0) {
+        if (Object.keys(myAttorneyExplainItem).length !== 0) {
             // TODO: 校验某些不能有空值的字段，并反馈校验结果
-            console.log("对象有输入的值", myAttorneyItem);
-            myAttorneyObj.attorneyItem.push(myAttorneyItem);
-            this.setAttorneyItemData('attorneyItem', myAttorneyObj.attorneyItem);
+            console.log("对象有输入的值", myAttorneyExplainItem);
+            myAttorneyObj.attorneyExplainList.push(myAttorneyExplainItem);
+            this.setAttorneyItemData('myAttorneyExplainItem', myAttorneyObj.attorneyItem);
             // 清空对象
-            myAttorneyItem = {};
+            myAttorneyExplainItem = {};
             this.setState({
-                attorneyItem: myAttorneyItem
+                attorneyExplainItem: myAttorneyExplainItem
             });
         } else {
-            console.log("空对象", myAttorneyItem);
+            console.log("空对象", myAttorneyExplainItem);
         }
     }
 
@@ -140,6 +139,7 @@ class BasicInfo extends React.Component {
         let myAttorneyObj = this.state.attorneyObj;
         myAttorneyObj[key] = value;
         myProductData.attorneyList[0] = myAttorneyObj;
+        console.log('setStateData myAttorneyObj:', myAttorneyObj);
         this.setState({
             attorneyObj: myAttorneyObj,
             productData: myProductData
@@ -148,17 +148,17 @@ class BasicInfo extends React.Component {
     }
 
     setAttorneyItemData(key, value) {
-        let myAttorneyItem = this.state.attorneyItem;
-        value = value.trim();
+        let myAttorneyExplainItem = this.state.attorneyExplainItem;
+        value = ('' + value).trim();
         if (value === "") {
-            delete myAttorneyItem[key];
+            delete myAttorneyExplainItem[key];
         } else {
-            myAttorneyItem[key] = value;
+            myAttorneyExplainItem[key] = value;
         }
         this.setState({
-            attorneyItem: myAttorneyItem
+            attorneyExplainItem: myAttorneyExplainItem
         });
-        console.log('myAttorneyItem:', myAttorneyItem);
+        console.log('myAttorneyExplainItem:', myAttorneyExplainItem);
     }
 
     getComponent(item) {
@@ -236,22 +236,24 @@ class BasicInfo extends React.Component {
                         <h1>委托说明：</h1>
                         <div className="basicinfo-attorneyItem-wrap">
                             {
-                                global.attorneyItemList.map((item, index) => {
+                                global.attorneyExplainItemList.map((item, index) => {
                                     return (
                                         <div key={index} className="basicinfo-attorneyItem-item" style={{ flex: item.flex }}>
                                             <div className="basicinfo-attorneyItem-title">{item.desc}</div>
                                             {
-                                                this.state.productData.attorneyList[0].attorneyItem.map((attorneyItem, idx) => {
+                                                this.state.productData.attorneyList[0].attorneyExplainList.length > 0 ?
+                                                this.state.productData.attorneyList[0].attorneyExplainList.map((attorneyItem, idx) => {
                                                     return (
                                                         <div key={idx} className="basicinfo-attorneyItem-info">{attorneyItem[item.name]}</div>
                                                     )
                                                 })
+                                                : null
                                             }
                                             <div className="basicinfo-attorneyItem-input-wrap">
                                                 <Input
                                                     className="basicinfo-attorneyItem-input"
                                                     placeholder={item.desc}
-                                                    value={this.state.attorneyItem[item.name]}
+                                                    value={this.state.attorneyExplainItem[item.name]}
                                                     onChange={this.handleAttorneyItemInputChange.bind(this, item.name)}
                                                 ></Input>
                                             </div>

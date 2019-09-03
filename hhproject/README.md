@@ -113,7 +113,11 @@
 1. 如何判断空对象：https://blog.csdn.net/qq_38627581/article/details/77353015
 2. 如何判断字符串是否全为空格：使用trim()函数，可移除字符串前面和后面的空格
 3. TODO: 委托说明中，校验某些不能有空值的字段，并反馈校验结果
-4. 目前bug位置：basicinfo：244-248行，121-122行
+4. 目前bug位置：basicinfo：244-248行，121-122行,问题是productData和attorneyObj中attorneyList嵌套层数不同，这里需要理一下数据逻辑，重新设计字段结构
+5. bug接上：一个产品中有产品基本信息+委托单列表，委托单列表中包括委托单信息+委托说明列表，委托说明中若干条不同的委托数据。现在委托单列表和委托说明列表都是用的同一个名字`attorneyList`。只需要将委托说明列表换个名字即可，换为attorneyExplainList
+
+## 2019-09-04
+1. 上述bug已修复，面对本页数据比较复杂的特点，考虑使用redux、lodash.get
 
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
