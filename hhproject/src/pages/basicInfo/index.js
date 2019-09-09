@@ -10,6 +10,7 @@ import PublicHeader from '../../components/publicHeader/index.js';
 
 const curPage = 2;
 const { Option } = Select;
+const { TextArea } = Input;
 
 class BasicInfo extends React.Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class BasicInfo extends React.Component {
             console.log("收到参数:", this.props.history.location.state.data);
             if (this.props.history.location.state.data.attorneyList.length === 0) {
                 const attorneyExplainList = [];
-                this.props.history.location.state.data.attorneyList.push({'attorneyExplainList':attorneyExplainList});
+                this.props.history.location.state.data.attorneyList.push({ 'attorneyExplainList': attorneyExplainList });
                 console.log("收到参数,添加属性:", this.props.history.location.state.data);
             }
             me.setState({
@@ -134,6 +135,10 @@ class BasicInfo extends React.Component {
         this.setStateData(name, momentObj.format('YYYY.MM.DD'));
     }
 
+    onTextAreaChange({ target: { value } }) {
+        console.log('图片备注信息：', value);
+    }
+
     setStateData(key, value) {
         let myProductData = this.state.productData;
         let myAttorneyObj = this.state.attorneyObj;
@@ -159,6 +164,11 @@ class BasicInfo extends React.Component {
             attorneyExplainItem: myAttorneyExplainItem
         });
         console.log('myAttorneyExplainItem:', myAttorneyExplainItem);
+    }
+
+    // 生成委托单
+    exportAttorneyFile(){
+        console.log('生成委托单');
     }
 
     getComponent(item) {
@@ -242,12 +252,12 @@ class BasicInfo extends React.Component {
                                             <div className="basicinfo-attorneyItem-title">{item.desc}</div>
                                             {
                                                 this.state.productData.attorneyList[0].attorneyExplainList.length > 0 ?
-                                                this.state.productData.attorneyList[0].attorneyExplainList.map((attorneyItem, idx) => {
-                                                    return (
-                                                        <div key={idx} className="basicinfo-attorneyItem-info">{attorneyItem[item.name]}</div>
-                                                    )
-                                                })
-                                                : null
+                                                    this.state.productData.attorneyList[0].attorneyExplainList.map((attorneyItem, idx) => {
+                                                        return (
+                                                            <div key={idx} className="basicinfo-attorneyItem-info">{attorneyItem[item.name]}</div>
+                                                        )
+                                                    })
+                                                    : null
                                             }
                                             <div className="basicinfo-attorneyItem-input-wrap">
                                                 <Input
@@ -268,7 +278,15 @@ class BasicInfo extends React.Component {
                     {/* 其他 */}
                     <div className="basicinfo-other">
                         <h1>检测示意图：</h1>
+                        <img className="basicinfo-img" alt="图纸" src="http://i2.cdn.cnn.com/cnnnext/dam/assets/161021133655-img-worlds-velociraptor-super-169.jpg" />
+                        <TextArea
+                            // value={}
+                            onChange={this.onTextAreaChange.bind(this)}
+                            placeholder="备注"
+                            autosize
+                        />
                     </div>
+                    <Button className="basicinfo-attorneyItem-btn" type="primary" onClick={this.exportAttorneyFile}>生成委托单</Button>
                 </div>
             </div>
         );

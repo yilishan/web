@@ -124,6 +124,12 @@
    3. 上传图片模块
    4. 生成委托单
 
+## 2019-09-09
+1. 导出excel的思路：
+      1. 绘制表格，导出excel
+      2. 先编写excel模板，再读取修改对应的值，之后导出。这种方法的关键在于导出后的格式能否保留原有样式
+      3. 前端可以使用`SheetJS`(https://github.com/SheetJS/js-xlsx)
+      4. nodejs可以考虑使用`ejsexcel`https://github.com/sail-sail/ejsExcel
 ----
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
